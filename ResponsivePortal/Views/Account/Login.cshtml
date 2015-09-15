@@ -1,0 +1,187 @@
+﻿@model ResponsivePortal.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/shared/_AdminLayout.cshtml";
+}
+<style>
+    .editerror {
+        color: red;
+        font-size:medium;       
+        text-align:match-parent;
+        margin-left:30px;
+    }
+    .editMessage {
+        color: #2da51b;
+        font-size: medium;
+        text-align: match-parent;
+        margin-left: 30px;
+    }
+
+    .field-validation-error {
+        display:inline-block;
+        padding: 6px 4px;      
+        background: white;
+        color: red;
+        font-size: 12px;
+        font-weight: 300;
+        -moz-border-radius-bottomleft: 2px;
+        -webkit-border-bottom-left-radius: 2px;
+        border-bottom-left-radius: 2px;
+        -moz-border-radius-bottomright: 2px;
+        -webkit-border-bottom-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+    }
+    .login {
+        position: relative;
+        margin: 0 auto;
+        min-width:250px;
+        padding: 20px 20px 20px;       
+        background: white;
+        border-radius: 3px;
+        -webkit-box-shadow: 0 0 200px #404040, 0 1px 2px rgba(0, 0, 0, 1.5);
+        box-shadow: 0 0 200px rgba(255, 255, 255, 1.5), 0 1px 3px rgba(0, 0, 0, 1.3),0 1px 3px rgba(0, 0, 0, 1.3);
+        border-color: rgba(0, 0, 0, 0.10);
+    }
+
+    .edit-smallfont {
+        color: #5B5B5B; 
+        font-family:Calibri;       
+        font-size: small;
+    }
+    .edit-small {        
+        font-size: small;
+    }
+    button, .button {
+        border-style: solid;
+        border-width: 0px;
+        cursor: pointer;
+        font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+        font-weight: normal;
+        line-height: normal;
+        margin: 0 0 1.25rem;
+        position: relative;
+        text-decoration: none;
+        text-align: center;
+        display: inline-block;
+        padding-top: 1rem;
+        padding-right: 2rem;
+        padding-bottom: 1.0625rem;
+        padding-left: 2rem;
+        font-size: 1rem;
+        background-color: #9ACD32;
+        border-color: #007095;
+        color: white;
+        -webkit-transition: background-color 300ms ease-out;
+        -moz-transition: background-color 300ms ease-out;
+        transition: background-color 300ms ease-out;
+        padding-top: 1.0625rem;
+        padding-bottom: 1rem;
+        -webkit-appearance: none;
+        border: none;
+        font-weight: bold !important;
+    }
+</style>
+<script>
+    $(window).load(function ()
+    {
+        $('#userError').css("visibility", 'hidden');
+        $('#pwdError').css("visibility", 'hidden');
+        
+    });
+    function Validate()
+    {
+        var user = $('#UserName');
+        var pass = $('#Password');
+        $('#userError').css("visibility", 'hidden');
+        $('#pwdError').css("visibility", 'hidden');
+        $('#UserName').css("backgroundColor", 'white');
+        $('#Password').css("backgroundColor", 'white');
+       
+        if (user.val() == "") {
+            $('#userError').css("visibility", 'visible');
+            $('#UserName').css("backgroundColor", '#FDCDCD');
+        }
+        if (pass.val() == "") {
+            $('#pwdError').css("visibility", 'visible');
+            $('#Password').css("backgroundColor", '#FDCDCD');
+        }
+        if ((user.val() == "") || (pass.val() == "")) { return false; }
+        else { return true;}
+    }
+</script>
+<div class="row">&nbsp;</div>
+    <div class="row">
+    <div class="column">
+        <div>
+            <h3>@Model.Resources["TITLE"]</h3>
+            <h6>@Model.Resources["INSTRUCTIONS"]</h6>
+        </div>
+    </div>
+</div>
+    <div class="row">
+        <div class="row">
+            @if (ViewBag.Message == "1")
+            {
+                <div id="generalError" class="editerror">
+                    @Model.Resources["INVALIDDETAILS"]
+                </div>
+            }
+            @if (ViewBag.Message == "2")
+            {
+                <div class="editMessage">
+                    <strong>@Model.Resources["MAILSENT"]</strong>
+                </div>
+            }
+            @if (ViewBag.Message == "3")
+            {
+                <div class="editMessage">
+                    <strong>@Model.Resources["LOGINNEWPASSWORD"]</strong>
+                </div>
+            }
+        </div>
+
+        <div class="large-5 medium-5 small-5 columns">
+            <div class="large-2">&nbsp;</div>
+            <section id="loginForm" class="login">
+                @using (Html.BeginForm("Login", "Account", new { returnUrl = ViewBag.ReturnUrl, portalId = ViewBag.PortalId }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+
+                    <div class="row">
+                        <div class="column">
+                            <div class="row">
+                                <label class="text-left" for="UserName">@Model.Resources["USERNAMELABEL"]</label>
+                                @Html.TextBoxFor(m => m.UserName, new { @id = "UserName", @style = "margin-bottom:2px", @class = "edit-smallfont" })
+                                <span id="userError" class="field-validation-error" data-valmsg-for="UserName" data-valmsg-replace="true">@Model.Resources["USERREQUIRED"]</span>
+                            </div>
+                            <div class="row">
+                                <label class="text-left" for="Password">@Model.Resources["PASSWORDLABEL"]</label>
+                                @Html.PasswordFor(m => m.Password, new { @id = "Password", @style = "margin-bottom:2px", @class = "edit-smallfont" })
+                                <span id="pwdError" class="field-validation-error" data-valmsg-for="Password" data-valmsg-replace="true">@Model.Resources["PWDREQUIRED"]</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="column" style="width:auto">
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                        </div>
+                        <div class="edit-smallfont">
+                            <label>@Model.Resources["REMEMBERME"]</label>
+                        </div>
+                    </div>
+                    <div>
+                        <strong><input class="button" type="submit" onclick="return Validate();" value="@Model.Resources["LOGINBUTTONLABEL"]" /></strong>
+                    </div>
+                }
+                <div>
+                    <a href="/Account/ResetPassword/@Model.clientId/@Model.portalId" class="edit-small">
+                        @Model.Resources["RESETPASSWORD"]
+                    </a>
+                </div>
+            </section>
+        </div>
+    </div>
+

@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Custom Error Page";
+    Layout = null;
+}
+
+<div style="margin-left:10px; margin-right:10px;">
+    <div class="large-12 columns " style="padding:0px; margin-top:20px;">  
+    @if (@ViewData["ApplicationError"] != null)
+    {
+        <p><b><u>Application Error Details:</u></b></p>
+        <hr />
+        <p> @Html.Raw(HttpUtility.HtmlDecode((string)@ViewData["ApplicationError"]))</p>
+        <hr />
+    }
+    @if(@ViewData["ErrorMsg"]!=null)
+    {   
+        <p><b><u>Error Details:</u></b></p>
+        <hr />
+        <p> @Html.Raw(HttpUtility.HtmlDecode((string)@ViewData["ErrorMsg"]))</p>
+        <hr />
+    }
+    @if(@ViewData["ConfigErrorMsg"]!=null)
+    {   
+        <hr />
+        <p> @Html.Raw(HttpUtility.HtmlDecode((string)@ViewData["ConfigErrorMsg"]))</p>
+        <hr />
+    }
+    @if (@ViewData["IpRestrictionErrorMsg"] != null)
+    {
+        <hr />
+        <p> @Html.Raw(HttpUtility.HtmlDecode((string)@ViewData["IpRestrictionErrorMsg"]))</p>
+        <hr />
+    }
+    </div>   
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

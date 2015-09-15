@@ -1,0 +1,10 @@
+﻿@model ResponsivePortal.Models.CustomMessageViewModel
+@{
+    ViewBag.Title = "CustomMessage";
+    Layout = null;
+}
+
+<div class="small-block-grid-12 large-block-grid-12 small-12 containerTopOffset">
+    <div class="home_customTitle">@Model.Title</div>
+    <div>@Html.Raw(HttpUtility.HtmlDecode(Model.Message))</div>
+</div>

@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Art_Attachments" xml:space="preserve">
+    <value>ATTACHMENTS</value>
+  </data>
+  <data name="Art_Attributes" xml:space="preserve">
+    <value>ATTRIBUTES</value>
+  </data>
+  <data name="Art_Categories" xml:space="preserve">
+    <value>CATEGORIES</value>
+  </data>
+  <data name="Art_Feedback" xml:space="preserve">
+    <value>Was this answer helpful?</value>
+  </data>
+  <data name="Art_Modified" xml:space="preserve">
+    <value>Modified:</value>
+  </data>
+  <data name="Art_RelAnswers" xml:space="preserve">
+    <value>RELATED ANSWERS</value>
+  </data>
+  <data name="Art_RelLinks" xml:space="preserve">
+    <value>RELATED LINKS</value>
+  </data>
+  <data name="clearAll" xml:space="preserve">
+    <value>Clear All</value>
+  </data>
+  <data name="contentTypes" xml:space="preserve">
+    <value>CONTENT TYPES</value>
+  </data>
+  <data name="didYouMean" xml:space="preserve">
+    <value>Did you mean:</value>
+  </data>
+  <data name="filterYourResults" xml:space="preserve">
+    <value>FILTER YOUR RESULTS</value>
+  </data>
+  <data name="knowledgebases" xml:space="preserve">
+    <value>KNOWLEDGEBASES</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="searchFiltersApplied" xml:space="preserve">
+    <value>Search Filters Applied</value>
+  </data>
+  <data name="SolFinder_SearchEverything" xml:space="preserve">
+    <value>Search Everything</value>
+  </data>
+  <data name="SolFinder_SearchSolFinders" xml:space="preserve">
+    <value>Search Solution Finders</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="searchSuggestions" xml:space="preserve">
+    <value>SEARCH SUGGESTIONS</value>
+  </data>
+  <data name="searchResultFor" xml:space="preserve">
+    <value>Search Results for</value>
+  </data>
+  <data name="all" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="format" xml:space="preserve">
+    <value>Format</value>
+  </data>
+  <data name="DBError" xml:space="preserve">
+    <value>Database error</value>
+  </data>
+  <data name="GeneralError" xml:space="preserve">
+    <value>General error</value>
+  </data>
+  <data name="IndexError" xml:space="preserve">
+    <value>Index error</value>
+  </data>
+  <data name="IOError" xml:space="preserve">
+    <value>Input / output error</value>
+  </data>
+  <data name="HomePageError" xml:space="preserve">
+    <value>Home page error</value>
+  </data>
+  <data name="JsonError" xml:space="preserve">
+    <value>Json error</value>
+  </data>
+  <data name="AdminLogin" xml:space="preserve">
+    <value>Admin login error</value>
+  </data>
+  <data name="SearchError" xml:space="preserve">
+    <value>Search error</value>
+  </data>
+  <data name="ConfigPortalAdminError" xml:space="preserve">
+    <value>The portal you are accessing is not converted as responsive portal. Please configure the portal using &lt;a href='/Admin' &gt;Portal Admin &lt;/a&gt;</value>
+  </data>
+  <data name="FileDoesNotExist" xml:space="preserve">
+    <value>File does not exist</value>
+  </data>
+  <data name="IPAddressBlockedError" xml:space="preserve">
+    <value>Your IP Address is blocked by this site. Please contact your portal administrator for any assistance.</value>
+  </data>
+  <data name="UserNotAuthedError" xml:space="preserve">
+    <value>User not authenticated error</value>
+  </data>
+  <data name="ConvertCDPathError" xml:space="preserve">
+    <value>Error converting CD path</value>
+  </data>
+  <data name="GetSlnFinderDetailsError" xml:space="preserve">
+    <value>Get solution finder details error</value>
+  </data>
+  <data name="ApplicationExceptionError" xml:space="preserve">
+    <value>Application exception, see log file for details</value>
+  </data>
+  <data name="CreateViewModelError" xml:space="preserve">
+    <value>Create view model error</value>
+  </data>
+  <data name="GetViewModelError" xml:space="preserve">
+    <value>Get view model error</value>
+  </data>
+  <data name="HomeModuleNotFoundError" xml:space="preserve">
+    <value>Home module not found error</value>
+  </data>
+  <data name="SolutionFinderModuleNotFoundError" xml:space="preserve">
+    <value>SolutionFinder module not found error</value>
+  </data>
+  <data name="BrowseModuleNotFoundError" xml:space="preserve">
+    <value>Browse module not found error</value>
+  </data>
+  <data name="AdminAddConfigDetailPortal" xml:space="preserve">
+    <value>Admin error adding config portal details</value>
+  </data>
+  <data name="AdminAddConfigLanguage" xml:space="preserve">
+    <value>Admin error adding language</value>
+  </data>
+  <data name="AdminBreadcrumbEditError" xml:space="preserve">
+    <value>Error editing breadcrumb view</value>
+  </data>
+  <data name="AdminConfigError" xml:space="preserve">
+    <value>Admin configuration error</value>
+  </data>
+  <data name="AdminGetPortals" xml:space="preserve">
+    <value>Admin get portals error</value>
+  </data>
+  <data name="AdminGetUserName" xml:space="preserve">
+    <value>Error getting admin user name</value>
+  </data>
+  <data name="ArticleFileContentError" xml:space="preserve">
+    <value>Error with article content</value>
+  </data>
+  <data name="ArticleGetKbName" xml:space="preserve">
+    <value>Error getting article KB name</value>
+  </data>
+  <data name="ArticleGetListError" xml:space="preserve">
+    <value>Eror getting article list</value>
+  </data>
+  <data name="ArticleGetResourceError" xml:space="preserve">
+    <value>Error getting article resource</value>
+  </data>
+  <data name="ArticleIndexError" xml:space="preserve">
+    <value>Article index page error</value>
+  </data>
+  <data name="ArticleSendEmailError" xml:space="preserve">
+    <value>Error sending article email</value>
+  </data>
+  <data name="ArticleSetFavError" xml:space="preserve">
+    <value>Error setting article favorites</value>
+  </data>
+  <data name="ArticleSetFeedbackError" xml:space="preserve">
+    <value>Error setting article feedback</value>
+  </data>
+  <data name="ArticleSetRatingError" xml:space="preserve">
+    <value>Error setting article rating</value>
+  </data>
+  <data name="ArticleSubscriptionError" xml:space="preserve">
+    <value>Error updating article subscription</value>
+  </data>
+  <data name="ChangePasswordError" xml:space="preserve">
+    <value>Error changing user password</value>
+  </data>
+  <data name="LoginError" xml:space="preserve">
+    <value>Error logging in</value>
+  </data>
+  <data name="LogOutError" xml:space="preserve">
+    <value>Error logging out</value>
+  </data>
+  <data name="ResetPasswordError" xml:space="preserve">
+    <value>Error resetting user password</value>
+  </data>
+  <data name="StandardErrorMessage" xml:space="preserve">
+    <value>An unexpected error has occurred.  Please contact your System Administrator if this persists.</value>
+  </data>
+  <data name="UnAuthorizedAccess" xml:space="preserve">
+    <value>Unauthorized Access.</value>
+  </data>
+</root>

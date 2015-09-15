@@ -1,0 +1,490 @@
+﻿<portal>
+  <globalSettings>
+    <!-- 
+    Portal Types:   no_registration, secure, personalized. 
+    Important:      Only one type can be defined. Must match what has been configured in the KB Admin 
+    Example:        <portalType>secure</portalType>
+    -->
+    <portalType>no_registration</portalType>
+    <!--
+    Article Groups: Specify the Article Group ID and an optional description for your reference only. Multiple groups can be defined. 
+    Important:      The description, i.e. "Agents" is for your reference only. The portal reads the ID value only.
+    Example:        <articleGroups>
+                        <group id="3">Agents</group>
+                        <group id="4">Contractors</group>
+                    </articleGroups>
+    -->
+    <articleGroups></articleGroups>
+    <!--
+    Article Template Body Security: true, false
+    Example: <articleTemplateBodySecurity enabled="false" />
+    -->
+    <articleTemplateBodySecurity enabled="false" />
+    <!--
+    Language:   Define the language of the portal. 
+    			1 = English
+				2 = Spanish
+				3 = French
+				5 = Japanese
+				6 = German
+				7 = Chinese (Traditional)
+				8 = Italian
+				9 = Dutch
+				10 = Swedish
+				11 = Korean
+				14 = Chinese (Simplified)
+				15 = Portuguese
+				16 = Polish
+				17 = Greek
+				18 = Russian
+				19 = Turkish
+				20 = Danish
+    -->
+    <language id="1">English</language>
+    <!--
+    Host Name:  Default is blank. Only 1 hostname can be provided.
+    Example:   <hostName>www.test.com</hostName>
+    -->
+    <hostName></hostName>
+    <!--
+    IP Address Restrictions:    Default is blank. One or more ranges can be specified. 
+    Examples:                   <ipAddressRestriction>
+                                    <range from="192.168.10.1" to="192.168.100.1" />	
+				                    <range from="201.110.10.1" to="201.110.100.1" />
+                                </ipAddressRestriction>
+    -->
+    <ipAddressRestriction></ipAddressRestriction>
+    <!--
+    Knowledge Base: Specify the knowledgebase ID and an optional description for your reference only. Multiple KBs can be defined.
+    Important:      The description, i.e. "Support" is for your reference only. The portal reads the ID value only.
+    Example:        <knowledgeBases>
+                        <kb id="14">Support</kb>
+                        <kb id="21">Partners</kb>
+                    </knowledgeBases>
+    -->
+    <knowledgeBases>
+      <kb id="1">Default</kb>
+    </knowledgeBases>
+    <!-- 
+    Modules:    Specify which modules to display in the portal by setting enabled = true. 
+    			Disable the module by setting enabled = false.          
+                Specify the module display order in the global navigation by setting the "displayOrder" with a numerical value. 
+                The modules will be displayed from lowest to highest values. 
+                Specify the name of the module between the opening and closing tags. 
+                This name is used by the Global Navigation and by the Breadcumb Navigation.
+    Important:  Do not modify the module's "ID" attribute. 
+    Example:    <modules>
+                    <home id="home" enabled="true" displayOrder="1">HOME</home>
+                    <articles id="article" enabled="false" displayOrder="2">ARTICLES</articles>
+                    <browse id="browse" enabled="false" displayOrder="3">BROWSE</browse>
+                    <solutionFinder id="solutionFinder" enabled="false" displayOrder="4">SOLUTION FINDERS</solutionFinder>
+                </modules>
+
+    -->
+    <modules>
+      <home id="home" enabled="true" displayOrder="1">HOME</home>
+      <articles id="article" enabled="true" displayOrder="2">ARTICLES</articles>
+      <browse id="browse" enabled="true" displayOrder="3">BROWSE</browse>
+      <solutionFinder id="solutionFinder" enabled="true" displayOrder="4">SOLUTION FINDERS</solutionFinder>
+    </modules>
+    <!-- 
+    Portal Navigation:  To display the portal's global navigation set enabled = true. To hide the navigation set enabled = false. 
+    Example:            <portalNavigation enabled="true" />
+    -->
+    <portalNavigation enabled="true" />
+    <!--
+    Breadcrumbs:    To display breadcrumbs set enabled = true. To hide the breadcrumbs set enabled = false.  
+    Example:        <breadcrumbs enabled="true" />
+    -->
+    <breadcrumbs enabled="true" />
+    <!--
+    Header:     HTML entered into this section will be displayed as the portal's header. 
+    Important:  Escape all HTML by entering "<![CDATA[" before the HTML and "]]>" after the HTML
+    Example:    <![CDATA[
+                    <div class="header">
+                        <p>This is the header</p>
+                    </div>
+                ]]>
+    -->
+    <header>
+      <![CDATA[
+       
+   	]]>
+    </header>
+    <!--
+    Footer:     HTML entered into this section will be displayed as the portal's footer. 
+    Important:  Escape all HTML by entering "<![CDATA[" before the HTML and "]]>" after the HTML
+    Example:    <![CDATA[
+                    <div class="footer">
+                    	<p>This is the footer</p>
+                    </div> 
+                ]]>
+
+    -->
+    <footer>
+      <![CDATA[
+        
+  	]]>
+    </footer>
+  </globalSettings>
+  <login>
+    <!-- 
+        Reset Password:     Set to "true" to enable the user to reset their password. Set to "false" to disable password resets.
+        Example:            <resetPassword enabled="true" />
+    -->
+    <resetPassword enabled="true" />
+  </login>
+  <home>
+    <!-- 
+    Search Widget:          Set to "true" to enable the search widget. Set to "false" to disable the widget. 
+    Example:                <searchWidget enabled="true" />
+    -->
+    <searchWidget enabled="true" />
+    <!-- 
+    Attributes Widget:  Display Order: The order which the attributes should be displayed (required)
+                        ID: The attribute's ID. Only sub-attributes can be displayed (required)
+                        Name: The name of the attribute. The name of the attribute in the KB Admin will not be used (required)
+                        Image: Name of an image which defines the attribute. Just specify the name, not the path. (optional)
+                        Enable the widget by setting "enabled=true". Disable the widget by setting "enabled=false"
+                        Only 1 instance of this widget can be defined 
+    Example:            <attributesWidget enabled="true">
+                          <attribute displayOrder="1">
+                            <id>5</id>
+                            <name>My Product 1</name>
+                            <image>product1.png</image>
+                          </attribute>
+                          <attribute displayOrder="2">
+                            <id>6</id>
+                            <name>My Product 2</name>
+                            <image>product2.png</image>
+                          </attribute>
+                        </attributesWidget>
+	-->
+    <attributesWidget enabled="false">
+
+    </attributesWidget>
+    <!-- 
+    Categories Widget:  Display Order: The order which the attributes should be displayed (required)
+                        ID: The category's ID.  Only the top-level parent category can be specified for use in this widget. 
+                        Child categories can't be specified. (required)
+                        Name: The name of the category. The name of the category in the KB Admin will not be used (required). 
+                        Image: Path to an image which defines the attribute. Just define the name, not the path (optional)
+                        Enable the widget by setting "enabled=true". Disable the widget by setting "enabled=false"
+                        A maximum of 20 categories can be defined 
+                        Only 1 instance of this widget can be defined
+                        Best Practice - ensure all images are the same size                       
+      Example:          <categoriesWidget enabled="true">
+						  <category displayOrder="2">
+							<id>1026</id>
+							<name>BILLING</name>
+							<image>icon3.png</image>
+						  </category>
+						  <category displayOrder="1">
+							<id>1027</id>
+							<name>Bus Prod</name>
+							<image>icon4.png</image>
+						  </category>
+						</categoriesWidget>  
+    -->
+    <categoriesWidget enabled="false">
+
+    </categoriesWidget>
+    <!-- 
+    Articles from Category Widget:  Category ID: ID of the category or sub-category to be used for the widget (required)
+                                    Number of Articles: 1-50 (required)
+                                    Number of Days: All, or 1-90 (required)
+                                    Articles will be displayed by Modified Date, newest to oldest
+                                    This widget can be implemented multiple times. Assign a unique ID to the end of each widget name
+                                    Enable the widget by setting "enabled=true". Disable the widget by setting "enabled=false"
+    Example:                        
+                                   <articlesFromCategory enabled="true" id="1">
+                                      <categoryID>1001</categoryID>
+                                      <numberOfArticles>20</numberOfArticles>
+                                      <numberOfDays>30</numberOfDays>
+                                    </articlesFromCategory>
+                                    <articlesFromCategory enabled="true" id="2">
+									  <categoryID>1031</categoryID>
+									  <numberOfArticles>50</numberOfArticles>
+									  <numberOfDays>30</numberOfDays>
+									</articlesFromCategory>
+    -->
+    <articlesFromCategory enabled="false" id="1">
+
+    </articlesFromCategory>
+    <!-- 
+    Favorites Widget:   Number of Articles: 1-50 (required)
+                        Number of Days: All, or 1-90 (required)
+                        Enable the widget by setting "enabled=true". Disable the widget by setting "enabled=false"
+                        Only one instance of this widget can be enabled
+    Example:            
+                        <favorites enabled="false">
+                          <numberOfDays>30</numberOfDays>
+                          <numberOfArticles>10</numberOfArticles>
+                        </favorites>                   
+    -->
+    <favorites enabled="false">
+      <numberOfDays></numberOfDays>
+      <numberOfArticles></numberOfArticles>
+    </favorites>
+    <!--
+    Hot Topics Widget:  Number of Articles: 1-50 (required)
+                        Number of Days: 1-90 (Required)
+                        Articles will be displayed by Modified Date, newest to oldest
+                    	Enable the widget by setting "enabled=true". Disable the widget by setting "enabled=false"
+                        Only one instance of this widget can be enabled
+    Example:             
+                        <hotTopics enabled="true">
+                          <numberOfArticles>10</numberOfArticles>
+                          <numberOfDays>30</numberOfDays>
+                        </hotTopics>
+    -->
+    <hotTopics enabled="false">
+      <numberOfArticles></numberOfArticles>
+      <numberOfDays></numberOfDays>
+    </hotTopics>
+    <!-- 
+    Custom Message: Disable the widget by setting enabled = false
+                    This widget can be implemented multiple times. Assign a unique ID to the end of each widget name     
+                    Message: Enter text or HTML. HTML must be escaped by entering it between "<![CDATA[" and "]]>".  
+    Example:        
+                    <customMessage enabled="true">
+                        <message>
+                            <![CDATA[
+                            <p>REMINDERS</p>                           
+                            <ul>
+                              <li>Important Reminder 1</li>
+                              <li>Important Reminder 2</li>
+                            </ul>
+                            </td>
+                            </tr>
+                            </table>
+                            </div>
+                            ]]>
+                        </message>
+                    </customMessage>
+    -->
+    <customMessage enabled="false" id="1">
+      <message>
+        <![CDATA[
+               
+    ]]>
+      </message>
+    </customMessage>
+  </home>
+  <search>
+    <!-- 
+    Search Type:    Set "selected=true" for only 1 of the following search types (required) 
+                    All other search types should be set to "selected=false"
+                    If multiple search types are selected only the first one will be used
+    Example:        <allWords selected="true" />
+    -->
+    <searchType>
+      <allWords selected="true" />
+      <anyWords selected="false" />
+      <boolean selected="false" />
+      <exactMatch selected="false" />
+      <naturalLanguage selected="false" />     
+    </searchType>
+    <!-- 
+    Enhanced Numeric Search: Set "enabled=true" or "enabled=false"
+    -->
+    <enhancedNumericSearch enabled="false" />
+    <!-- 
+    Spell Check:    Set "enabled=true" or "enabled=false"
+    -->
+    <spellCheck enabled="true" />
+    <!-- 
+    Community Clues:    Set "enabled=true" or "enabled=false"
+    -->
+    <communityClues enabled="true" />
+    <!-- 
+    Synonyms:    Set "enabled=true" or "enabled=false"
+    -->
+    <synonyms enabled="true" />
+    <!-- 
+    Suggested Searches:     Set "enabled=true" or "enabled=false"
+    -->
+    <suggestedSearches enabled="true" />
+    <!--
+    Results per Page:   Specify the maximum number of results to be displayed for each page of search results
+                        The value must be >=1 and <= 200
+    Example:            <resultsPerPage>25</resultsPerPage>
+    -->
+    <resultsPerPage>25</resultsPerPage>
+    <!-- 
+    Maximum Results:    Specify the maximum number of results to be returned for each search
+                        The value must be >=1 and <= 200
+    Example:            <maxResults>200</maxResults>
+    -->
+    <maxResults>200</maxResults>
+    <!-- 
+    Default Sort:   Set the sort order from 1-3 for the primary, secondary, and tertiary
+    Example:        <defaultSort>
+                      <relevance order="1" />
+                      <modifiedDate order="2" />
+                      <articleTitle order="3" />
+                    </defaultSort>
+    -->
+    <defaultSort>
+      <relevance order="1" />
+      <modifiedDate order="2" />
+      <articleTitle order="3" />
+    </defaultSort>
+    <!-- 
+    Auto Summarization: Max Length: Define a value >=50 and <= 250
+                        Display Summary: Set "selected=true" for one of the display types. All others should be "selected=false"
+                        If multiple types are selected only the first will be used
+    -->
+    <autoSummarization enabled="true">
+      <maxLength>100</maxLength>
+      <displaySummary>
+        <context selected="true" />
+        <quick selected="false" />
+        <manual selected="false" />
+      </displaySummary>
+    </autoSummarization>
+    <!-- 
+    Filter Display: This setting controls, filter groups that are available on the search results screen
+    				>=1 and <=5 filter types can be enabled
+                    KB: Set "enabled=true" to display this filter group. Set "enabled=false" to disable.
+                    Categories: Set "enabled=true" to display this filter group. Set "enabled=false" to disable.
+                    Attributes: Set "enabled=true" to display this filter group. Set "enabled=false" to disable.
+                    Content Types: Set "enabled=true" to display this filter group. Set "enabled=false" to disable.
+                    Formats: Set "enabled=true" to display this filter group. Set "enabled=false" to disable.
+    -->
+    <filterDisplay enabled="true">
+      <kb enabled="true" />
+      <categories enabled="true" />
+      <attributes enabled="true" />
+      <contentTypes enabled="true" />
+      <formats enabled="true" />
+    </filterDisplay>
+    <!-- 
+    Results Display:    This setting controls, what meta-data is displayed for each search result.
+    					>=0 and <=6 meta-data elements can be defined
+                        Article ID: Set "enabled=true" to display. Set "enabled=false" to disable.
+                        Article Attributes: Set "enabled=true" to display. Set "enabled=false" to disable.
+                        Date Modified: Set "enabled=true" to display. Set "enabled=false" to disable.
+                        KB Name: Set "enabled=true" to display. Set "enabled=false" to disable.
+                        Article File Type: Set "enabled=true" to display. Set "enabled=false" to disable.
+                        Highlight Term: Set "enabled=true" to highlight the search query. Set "enabled=false" to disable.
+    -->
+    <resultsDisplay enabled="true">
+      <articleID enabled="false" />
+      <articleAttributes enabled="false" />
+      <dateModified enabled="false" />
+      <kbName enabled="false" />
+      <articleFileType enabled="true" />
+      <highlightTerm enabled="true" />
+    </resultsDisplay>
+    <!-- 
+    Solution Finders:   Specify the ID of each solution finder that should be included in the search results 
+                        If more than 1 solution finder should be indexed, separate multiple IDs with a comma
+                        If left blank, no Solution Finders will be included in the search results
+
+    Example:           <solutionFinders>
+    	                   <id>1,18,33</id>
+                        </solutionFinders>
+    -->
+    <solutionFinders>
+      <id></id>
+    </solutionFinders>
+  </search>
+  <article>
+    <!--
+     Controls:	Define which article controls are available for your portal by setting "enabled=true". 
+     			Disable by setting "enabled=false".
+     			>=0 and <=5 controls can be enabled
+    -->
+    <controls>
+      <!-- 
+        Favorite:   Allow a user to save an article to their favorites list (secure or personalized portal) or 
+        			to a list of community favorites (open portal)
+        -->
+      <favorite enabled="true" />
+      <!--
+        Edit:   Links to the KB Admin portal where the article can be edited
+        -->
+      <edit enabled="true" />
+      <!-- 
+        Share: Enables the article to be shared to a social network and/or via email
+        -->
+      <share enabled="true">
+        <facebook enabled="true" />
+        <twitter enabled="true" />
+        <reddit enabled="true" />
+        <email enabled="true" />
+      </share>
+      <!-- 
+        Subscribe:  Allows a user to be notified via email when an article is updated
+ 		-->
+      <subscribe enabled="true" />
+      <!--
+        Feedback:   Allows a user to provide feedback on an article. 
+        -->
+      <feedback enabled="true">
+        <!-- 	If Feedback Form is disabled the user can still record their yes/no preference but 
+        		they will not be prompted for a suggestion 
+        -->
+        <feedbackForm enabled="true" />
+      </feedback>
+    </controls>
+    <!--
+    Display:    Define which meta-data is displayed on the Article page by setting "selected=true" or "selected=false".
+    			>=0 and <=6 meta-data elements can be selected
+    -->
+    <display>
+      <articleNumber selected="true" />
+      <kbName selected="true" />
+      <!-- 
+        Modified Date: 	Chose one date format by setting "selected=true". 
+        				The other date format should be set as "selected=false"
+      -->
+      <modifiedDate selected="true">
+        <formatMMDDYYYY selected="true" />
+        <formatDDMMYYYY selected="false" />
+      </modifiedDate>
+      <fileType selected="true" />
+      <attributes selected="true" />
+      <categories selected="true" />
+    </display>
+  </article>
+  <browse>
+    <!--
+    Category:   Define each category that will display on the Browse screen. 
+    			At least 1 and not more than 100 categories can be displayed on the Browse screen. 
+                Display Order:  Define the order that the category is displayed on the screen. Required
+                ID:             The category ID. Only top-level parent categories can be defined. 
+                				Sub-categories cannot be defined. Required
+                Name:           Name of the category that will be displayed in the portal. 
+                				The name entered in KB Admin will not be displayed. Required.
+                Image:          The default image for the category (optional)
+                Image Selected: The image displayed when the category is selected (optional)
+    Example:    <category displayOrder="1">
+                  <id>12</id>
+                  <name>Billing</name>
+                  <image>box.png</image>
+                  <imageSelected>box_selected.png</imageSelected>
+                </category>
+    -->
+
+  </browse>
+  <solutionFinder>
+    <!-- Solution Finders:  Define the solution finders that should be displayed on the main screen
+    						At least 1 and not more than 100 solution finders can be defined
+    						Display Order: Define the order that the solutions finders should be displayed (required)
+                            ID: Enter the ID of the Solution Finder (required)
+                            Image: Enter the path to an image to represent the Solution Finder (optional)
+        Example:            
+                            <solutionFinder>                              
+                                <solutionFinder displayOrder="1">
+                                  <id>1</id>
+                                  <name>name12</name>
+                                  <image>computer.png</image>
+                                </solutionFinder>
+                            <solutionFinder>
+        
+    -->
+
+  </solutionFinder>
+</portal>

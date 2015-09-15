@@ -1,0 +1,347 @@
+﻿@model ResponsivePortal.Models.ConfigModel
+@using ResponsivePortal.Resources
+@using System.Xml.Linq;
+@{
+    ViewBag.Title = "Edit Configuration";
+ Layout = "~/Views/shared/_AdminLayout.cshtml";
+}
+<link rel="stylesheet" href="~/Content/CSS/Admin.css">
+
+<div class="row">&nbsp;</div>
+<div class="row">
+    <table class="edittable">
+        <tr>
+            <td><img width="250" src="~/Images/moxielogo.jpg" /></td>
+            <td style="text-align:right"><a class="editheader" href="http://help.moxiesoft.com/docs/kb/9.4" target="_blank"><b>@AdminResources.Help</b></a></td>
+            <td><b><a class="editheader" href="/Admin/Logout">@AdminResources.Logout</a></b></td>
+        </tr>
+        <tr>
+            <td colspan="3" class="edituser">@AdminResources.LoggedUser @ViewBag.UserName </td>
+        </tr>
+    </table>
+</div>
+
+@using (Html.BeginForm("Configuration", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="column">
+            <h4 class="editheading">@AdminResources.PortalConfig</h4>
+        </div>
+        <div>&nbsp;</div>
+        <div class="column editconfiglist">
+            @foreach (var item in Model.BreadcrumbViewModel.NavigationList)
+            {
+                if (item.Selected)
+                {
+                    @Html.Raw(HttpUtility.HtmlDecode(item.Text))
+                }
+                else
+                {
+                    if (item.Value == "Admin")
+                    { <a href="/@item.Value/PortalList">@Html.Raw(HttpUtility.HtmlDecode(item.Text)) > </a>}
+                    else
+                    {<a href="/@item.Value/Index">@Html.Raw(HttpUtility.HtmlDecode(item.Text)) > </a> }
+                }
+            }
+        </div>
+    </div>
+    <div class="row"><hr> </div>
+    <div class="row">
+        <table class="large"  style="border:hidden;width:inherit">
+            <tr>
+                <td class="editconfigitems">
+                    <ol >@Html.ActionLink(AdminResources.Configuration, "Edit", new { id = 1 })</ol>
+                    <ol >@Html.ActionLink(AdminResources.Language, "Edit", new { id = 2 })</ol>
+                    <ol >@Html.ActionLink(AdminResources.CSS, "Edit", new { id = 3 })</ol>
+                    <ol >@Html.ActionLink(AdminResources.Images, "Edit", new { id = 4 })</ol>
+                    <ol >@Html.ActionLink(AdminResources.Script, "Edit", new { id = 5 })</ol>
+                </td>
+
+                <td>
+                    @if (Model.ConfigType == 1)
+                    {
+
+                         <div class="row" >
+                            <div class="column" >
+                                <table class="column"  >
+                                    <tr class="edittableheader">
+                                        <td class="text-center fontcolor">@AdminResources.FileName</td>
+                                        <td class="text-center fontcolor">@AdminResources.Author</td>
+                                        <td class="text-center fontcolor">@AdminResources.Modified</td>
+                                    </tr>
+                                    <tr>
+                                        @if (Model.ModifiedFilesModel.Count != 0)
+                                        {
+                                            foreach (var item in Model.ModifiedFilesModel)
+                                            {
+                                                <td class="text-center">@item.FileName</td>
+                                                <td class="text-center">@(item.UserName == null ? AdminResources.NA : item.UserName)</td>
+                                                <td class="text-center">@(item.ModDate == null ? AdminResources.NA : item.ModDate)</td>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <td class="text-center">portal-config.xml</td>
+                                            <td class="text-center">@AdminResources.NA</td>
+                                            <td class="text-center">@AdminResources.NA</td>
+                                        }
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        if (ViewBag.Msgtype == "2")
+                        {
+                            <div class="editerror">
+                             @AdminResources.ErrSaveXML
+                            </div>
+                        }
+                         if (ViewBag.Msgtype == "1")
+                        {
+                             <div class="editsuccess">
+                             @AdminResources.FileSaved
+                            </div>
+                        }
+                    <div class="container">
+                      
+                        @Html.TextAreaFor(m => m.XmlContent, new { @name = "ConfigTextArea", @style = "resize:none; min-height:400px;max-width:100%;", @spellcheck = "false" })
+                        @Html.HiddenFor(m => m.PortalId)
+                        @Html.HiddenFor(m => m.ConfigType)
+                       
+                    </div>
+                   
+                            <div class="container">
+                                <div class="bottom" >
+                                    <input type="submit"  title="@AdminResources.SaveChange" value=@AdminResources.Save />
+                                    <input type="reset" title="@AdminResources.ResetContent" value=@AdminResources.Cancel>
+                                </div>
+                            </div>
+
+                    }
+                    else if (Model.ConfigType == 2)
+                    {
+
+                        <div class="row" >
+                            <div class="column" >
+                                <table class="column"  >
+                                    <tr class="edittableheader">
+                                        <td class="text-center fontcolor">@AdminResources.FileName</td>
+                                        <td class="text-center fontcolor">@AdminResources.Author</td>
+                                        <td class="text-center fontcolor">@AdminResources.Modified</td>
+                                    </tr>
+                                    <tr>
+                                        @if (Model.ModifiedFilesModel.Count != 0)
+                                        {
+                                            foreach (var item in Model.ModifiedFilesModel)
+                                            {
+                                                 <td class="text-center">@item.FileName</td>
+                                                 <td class="text-center">@(item.UserName == null ? AdminResources.NA : item.UserName)</td>
+                                                 <td class="text-center">@(item.ModDate == null ? AdminResources.NA : item.ModDate)</td>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <td class="text-center">@ViewBag.lang</td>
+                                            <td class="text-center">@AdminResources.NA</td>
+                                            <td class="text-center">@AdminResources.NA</td>
+                                        }
+                                </tr>
+                                </table>
+                            </div>
+                        </div>
+                        if (ViewBag.Msgtype == "2")
+                        {
+                            <div class="editerror">
+                             @AdminResources.ErrSaveXML
+                            </div>
+                        }
+                         if (ViewBag.Msgtype == "1")
+                        {
+                             <div class="editsuccess">
+                             @AdminResources.FileSaved
+                            </div>
+                        }
+                        <div class="container">
+                            @Html.TextAreaFor(m => m.XmlContent, 2000, 300, new { @style = "resize:none; min-height:400px;max-width:100%", @spellcheck = "false", @wrap = "none" })
+                            @Html.HiddenFor(m => m.PortalId)
+                            @Html.HiddenFor(m => m.ConfigType)
+                            @Html.HiddenFor(m => m.LangId)
+                        </div>
+                       
+                            <div class="container">
+                                <div class="bottom" >
+                                    <input type="submit" title="@AdminResources.SaveChange" value=@AdminResources.Save />
+                                    <input type="reset" title="@AdminResources.ResetContent" value=@AdminResources.Cancel>
+                                </div>
+                            </div>
+
+                    }
+                    else if (Model.ConfigType == 3)
+                    {
+                        
+                        <div class="large-12">
+                            <table class="columns" style="border:thin;border-color:gray">
+                                <tr class="edittableheader">
+                                    <td class="text-center fontcolor">@AdminResources.FileName</td>
+                                    <td class="text-center fontcolor">@AdminResources.Author</td>
+                                    <td class="text-center fontcolor">@AdminResources.Modified</td>
+
+                                </tr>
+                                @foreach (var item in Model.CssFiles)
+                                {
+                                    string usr = "";
+                                    string date = "";                                                            
+                                    <tr>
+                                        <td class="edit-smallfont">@Html.ActionLink(item.Value, "Edit", new { cssId = item.Key })</td>
+                                        @if (Model.ModifiedFilesModel.Count == 0)
+                                        {
+                                            <td class="edit-smallfont">@AdminResources.NA</td>
+                                            <td class="edit-smallfont">@AdminResources.NA</td>
+                                        }
+                                        else
+                                        {
+                                            int flag = 0;
+                                            foreach (var file in Model.ModifiedFilesModel)
+                                            {
+                                                if (item.Value == file.FileName)
+                                                {
+                                                    flag = 1; usr = file.UserName; date = file.ModDate;
+                                                }
+                                            }
+                                            if (flag == 1)
+                                            {
+                                                <td class="text-left edit-smallfont">@usr</td>
+                                                <td class="text-left edit-smallfont">@date</td>
+                                            }
+                                            else
+                                            {
+                                                <td class="text-left edit-smallfont">@AdminResources.NA</td>
+                                                <td class="text-left edit-smallfont">@AdminResources.NA</td>
+                                            }
+
+                                        }
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                       
+                        if (ViewBag.Msgtype == "1")
+                        {
+                             <div class="editsuccess">
+                             @AdminResources.FileSaved
+                            </div>
+                        }
+                        <div class="row">
+                            @Html.TextAreaFor(m => m.TextContent, 2000, 300, new { @style = "resize:none; min-height:400px;max-width:100%", @spellcheck = "false", @wrap = "none" })
+                        </div>
+                        @Html.HiddenFor(m => m.PortalId)
+                        @Html.HiddenFor(m => m.ConfigType)
+                        @Html.HiddenFor(m => m.LangId)
+                       
+                       
+                            <div class="container">
+                                <div class="bottom" >
+                                    <input type="submit" title="@AdminResources.SaveChange" value=@AdminResources.Save />
+                                    <input type="reset" title="@AdminResources.ResetContent" value=@AdminResources.Cancel>
+                                </div>
+                            </div>
+
+                    }
+                    else if (Model.ConfigType == 4)
+                    {
+                        <div class="column" style="vertical-align:top">
+                            <h4 class="edit-smallfont">@AdminResources.ImageInfo</h4>
+                        </div>
+                        <div class="column" style="vertical-align:top">
+                            <label for="file1" class="edit-smallfont">@AdminResources.FileName:</label>
+                            <input type="file" name="files" id="file1" multiple="multiple" class="edit-smallfont" />
+                            <input type="submit" value=@AdminResources.Save>
+                        </div>
+                        if (Model.ModifiedFilesModel.Count != 0)
+                        {
+                            <table class="columns" style="border-color:#d5d1d1">
+                                <tr class="edittableheader">
+                                    <td style="color:white">@AdminResources.ImageName</td>
+                                    <td style="color:white">@AdminResources.ModifiedDate</td>
+                                    <td style="color:white">@AdminResources.UploadedUser</td>
+                                    <td style="color:white">@AdminResources.Delete</td>
+
+                                </tr>
+                                @foreach (var item in Model.ModifiedFilesModel)
+                                {
+                                    <tr>
+                                        <td class="edit-smallfont">@Html.ActionLink(item.FileName, AdminResources.Download, new { pid = item.PortalId, filename = item.FileName })</td>
+                                        <td class="edit-smallfont">@Html.DisplayFor(m => item.ModDate)</td>
+                                        <td class="edit-smallfont">@Html.DisplayFor(m => item.UserName)</td>                                       
+                                        <td class="edit-smallfont">@Html.ActionLink(AdminResources.Delete, "Delete", new { pid = item.PortalId, filename = item.FileName }, new { onclick = "return confirm('Are you sure you wish to delete this image?');" })</td>                                    
+                                    </tr>
+                                }
+                            </table>
+                        }
+                        @Html.HiddenFor(m => m.PortalId)
+                        @Html.HiddenFor(m => m.ConfigType)
+                    }
+
+                    else if (Model.ConfigType == 5)
+                    {
+
+                        <div class="row" >
+                            <div class="column" >
+                                <table class="column"  >
+                                    <tr class="edittableheader">
+                                        <td class="text-center fontcolor">@AdminResources.FileName</td>
+                                        <td class="text-center fontcolor">@AdminResources.Author</td>
+                                        <td class="text-center fontcolor">@AdminResources.Modified</td>
+                                    </tr>
+                                    <tr>
+                                       @if (Model.ModifiedFilesModel.Count != 0)
+                                       {
+                                           foreach (var item in Model.ModifiedFilesModel)
+                                           {
+                                                 <td class="text-center">@item.FileName</td>
+                                                 <td class="text-center">@(item.UserName == null ? "N/A" : item.UserName)</td>
+                                                 <td class="text-center">@(item.ModDate == null ? "N/A" : item.ModDate)</td>
+                                           }
+                                       }
+                                       else
+                                       {
+                                           <td class="text-center">portal.js</td>
+                                            <td class="text-center">@AdminResources.NA</td>
+                                            <td class="text-center">@AdminResources.NA</td>
+                                       }     
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                      
+                         if (ViewBag.Msgtype == "1")
+                        {
+                             <div class="editsuccess">
+                             @AdminResources.FileSaved
+                            </div>
+                        }
+                        <div>
+                            @Html.TextAreaFor(m => m.TextContent, 2000, 300, new { @style = "resize:none; min-height:400px;max-width:100%", @spellcheck = "false", @wrap = "none" })
+                            @Html.HiddenFor(m => m.PortalId)
+                            @Html.HiddenFor(m => m.ConfigType)
+                            @Html.HiddenFor(m => m.LangId)
+                        </div>
+                        
+                            <div class="container">
+                                <div class="bottom" >
+                                    <input type="submit" title="@AdminResources.SaveChange" value=@AdminResources.Save />
+                                    <input type="reset" title="@AdminResources.ResetContent" value=@AdminResources.Cancel>
+                                </div>
+                            </div>
+                    }
+                    else
+                    {
+                        <div class="column edit-largefont">                            
+                                @AdminResources.SelectOptions                            
+                        </div>
+                    }
+                </td>
+            </tr>   
+        </table>
+    </div>
+}

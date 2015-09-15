@@ -1,0 +1,18 @@
+﻿@model ResponsivePortal.Models.ArticlePartialViewModel 
+@using ResponsivePortal.Resources
+@{
+    ViewBag.Title = "Subscribe";
+    Layout = null;
+}
+<div class="row article_ShareContainer" >
+    <div class="article_ShareTopOffset"></div>
+    <div class="inline article_SubscribeInstructLabel">@Utilities.GetResourceText(Model.Resources, "CONTROLS_SUBSCRIBE_INSTRUCTIONS")</div>
+    <div class="article_SubscribeEmailLabel">@Utilities.GetResourceText(Model.Resources, "CONTROLS_SUBSCRIBE_EMAILLABEL")</div>
+    <input id="subscribeEmail" class="article_SubscribeEmailInput" type="text" value="@Model.ArticleItem.SubscribedEmail" />
+    <div class="inline articlesButton article_SubscribeButtonContainer">
+        <a class="article_SubscribeButtonText" onclick="javascript: executeMethod({ action: 'subscribeConfirm', rate: false });">@Utilities.GetResourceText(Model.Resources, "CONTROLS_SUBSCRIBE_SUBSCRIBEBUTTON")</a>
+    </div>
+    <div  class="inline articlesButton article_SubscribeButtonContainer push-1" >
+        <a class="article_SubscribeButtonText" onclick="javascript: executeMethod({ action: 'unsubscribeConfirm', rate: false });">@Utilities.GetResourceText(Model.Resources, "CONTROLS_SUBSCRIBE_UNSUBSCRIBEBUTTON")</a>
+    </div>
+</div>

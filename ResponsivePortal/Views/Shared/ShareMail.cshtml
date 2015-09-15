@@ -1,0 +1,20 @@
+﻿@using ResponsivePortal.Resources
+@{
+    ViewBag.Title = "ShareMail";
+    Layout = null;
+}
+<div class="row article_ShareMailContainer">
+    <div class="article_ShareTopOffset"></div>
+    <div class="inline article_ShareEmailLabel">@Utilities.GetResourceText(Model.Resources, "CONTROLS_SHARE_EMAIL_TOLABEL")</div>
+    <input id="shareEmail" class="article_ShareEmailInput" type="text" onkeyup="validateShareSendEmail();" />
+    <div id="shareEmailerr" class="validation-error"></div>
+    <div class="inline article_ShareSubjectLabel">@Utilities.GetResourceText(Model.Resources, "CONTROLS_SHARE_EMAIL_SUBJECTLABEL")</div>
+    <input id="shareSubject" class="article_ShareSubjectInput" type="text" onkeyup="validateShareSendEmail();" />
+    <div id="shareSuberr" class="validation-error"></div>
+    <div class="inline article_ShareSubjectLabel">@Utilities.GetResourceText(Model.Resources, "CONTROLS_SHARE_EMAIL_MESSAGELABEL")</div>
+    <textarea id="shareBody" class="article_ShareMessageInput" onkeyup="validateShareSendEmail();">@Model.ShareItem.EmailShareMessageBody</textarea>
+    <div class="inline articlesButton article_ShareButtonContainer">
+        <a class="article_ShareButtonText" onclick="javascript: executeMethod({ action: 'sendMail', rate: false });">@Utilities.GetResourceText(Model.Resources, "CONTROLS_SHARE_EMAIL_SEND")</a>
+    </div>
+    <div id="shareBodyerr" class="validation-error"></div>
+</div>

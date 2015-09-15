@@ -1,0 +1,594 @@
+﻿@model ResponsivePortal.Models.SearchResultsMainViewModel
+@using ResponsivePortal.Resources
+@using PagedList
+@using PagedList.Mvc
+@using ResponsivePortal.Models
+@using PortalAPI.Models
+@using System.Web.Mvc;
+@using System.Text;
+@{
+    ViewBag.Title = @Utilities.GetResourceText(Model.Resources, "TITLE");
+    Layout = "~/Views/shared/_Layout.cshtml";
+}
+
+<link href="~/Content/styles/@Model.clientId/@Model.portalId/search.css" rel="stylesheet" />
+<link href="~/Content/CSS/PagedList.css" rel="stylesheet">
+<script src="~/Content/JS/Search.js"></script>
+
+@Html.HiddenFor(x => x.clientId)
+@Html.HiddenFor(x => x.portalId)
+@if (Request.IsAuthenticated)
+    {
+@Html.HiddenFor(x => x.SessionTimeOutWarning)
+@Html.HiddenFor(x => x.SessionTimedOut)
+}
+
+@if (Model.SearchResultsViewModel == null)
+{
+    return;
+}
+
+@{
+    var fromw = "false";
+    if (@Model.FromWidget)
+    {
+        fromw = "true";
+    }
+}
+@if (Model.showBreadcrumb)
+{
+    <div class="row">
+        <div class=" hide-for-small-only large-12 columns breadcrumbOffset">
+            @{
+
+    var home = Model.BreadcrumbViewModel.NavigationList.FirstOrDefault();
+    if (!string.IsNullOrEmpty(@home.Text))
+    {
+        <a href="/@home.Value/Index/@Model.clientId/@Model.portalId?title=@home.Text" class="inline breadcrumb">@home.Text > </a>
+    }
+    if(@Model.FromWidget)
+    {
+        <div class="inline breadcrumb">@Utilities.GetResourceText(Model.Resources, "TITLE")</div>
+    }
+    else
+    {
+    <div class="inline breadcrumb">@Utilities.GetResourceText(Model.Resources, "SEARCHRESULTFOR")  @Model.Searchtext</div>
+    }
+            }
+        </div>
+    </div>
+    <hr class="large-12 columns separator" />
+}
+
+<div class="row searchalignment">
+    @if(Model.SearchResultsViewModel.Count >0)
+    { 
+        <div id="searchfilterswrapper" class="large-3 columns">
+        @{
+            var dicOfFilters = Session.GetSearchFilters(@Model.portalId);
+            List<SearchFiltersApplied>
+                catFilters = null;
+            List<SearchFiltersApplied>
+                attrFilters = null;
+            List<SearchFiltersApplied>
+                kbFilters = null;
+            List<SearchFiltersApplied>
+                contentFilters = null;
+            List<SearchFiltersApplied>
+                formatFilters = null;
+        }
+        @if (dicOfFilters != null && dicOfFilters.hasFilters)
+        {
+
+            <div class="highlight-header"> @Utilities.GetResourceText(Model.Resources, "FILTERDISPLAY_TITLE")</div>
+
+            <p></p>
+            <div class="row">
+                <div class=" bordercontainer">
+                    <p></p>
+                    @{
+
+
+            if (dicOfFilters.FilterCollection.ContainsKey(FilterType.category))
+            {
+                catFilters = dicOfFilters.FilterCollection[FilterType.category];
+            }
+            if (dicOfFilters.FilterCollection.ContainsKey(FilterType.Attribute))
+            {
+                attrFilters = dicOfFilters.FilterCollection[FilterType.Attribute];
+            }
+            if (dicOfFilters.FilterCollection.ContainsKey(FilterType.KnowledgeBase))
+            {
+                kbFilters = dicOfFilters.FilterCollection[FilterType.KnowledgeBase];
+            }
+            if (dicOfFilters.FilterCollection.ContainsKey(FilterType.ContentType))
+            {
+                contentFilters = dicOfFilters.FilterCollection[FilterType.ContentType];
+            }
+            if (dicOfFilters.FilterCollection.ContainsKey(FilterType.Format))
+            {
+                formatFilters = dicOfFilters.FilterCollection[FilterType.Format];
+            }
+                    }
+                    @if (kbFilters != null && kbFilters.Count > 0)
+                    {
+                        <div class="medium-headers">@Utilities.GetResourceText(Model.Resources, "RESULTSDISPLAY_KBNAME")</div>
+
+                        foreach (var item in kbFilters)
+                        {
+                            <div style="margin-left: 10px;">
+                                <div style="font-size:12px">
+                                    @item.Title
+                                    <a href="/Search/RemoveFilter/@Model.clientId/@Model.portalId?text=@Model.Searchtext&id=@item.Id&filterType=@item.FilterType&clientId=@Model.clientId&portalId=@Model.portalId&fromwidget=@fromw">
+                                        <img id="removeFilter" src="/content/Images/@Model.clientId/@Model.portalId/clear.png" class="deleteimage">
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    }
+
+
+                    @if (catFilters != null && catFilters.Count > 0)
+                    {
+                        var indentValue = 0;
+                        <div class="medium-headers"> @Utilities.GetResourceText(Model.Resources, "RESULTSDISPLAY_ARTICLECATEGORIES")</div>
+                        foreach (var item in catFilters)
+                        {
+                            var indent = indentValue + "px";
+                            <div style="margin-left: 10px;">
+                                <div style="text-indent:@indent;font-size:12px">
+                                    @item.Title
+                                    <a href="/Search/RemoveFilter/@Model.clientId/@Model.portalId?text=@Model.Searchtext&id=@item.Id&filterType=@item.FilterType&clientId=@Model.clientId&portalId=@Model.portalId&fromwidget=@fromw">
+                                        <img id="removeFilter" src="/content/Images/@Model.clientId/@Model.portalId/clear.png" class="deleteimage">
+                                    </a>
+                                </div>
+                            </div>
+                            indentValue += 10;
+                        }
+                    }
+
+                    @if (attrFilters != null && attrFilters.Count >= 0)
+                    {
+                        var indentValue = 0;
+                        <div class="medium-headers"> @Utilities.GetResourceText(Model.Resources, "RESULTSDISPLAY_ARTICLEATTRIBUTES")</div>
+                        foreach (var item in attrFilters)
+                        {
+                            var indent = indentValue + "px";
+                            <div style="margin-left: 10px;">
+                                <div style="text-indent:@indent;font-size:12px;border:none">
+                                    @item.Title
+                                    <a href="/Search/RemoveFilter/@Model.clientId/@Model.portalId?text=@Model.Searchtext&id=@item.Id&filterType=@item.FilterType&clientId=@Model.clientId&portalId=@Model.portalId&fromwidget=@fromw">
+                                        <img id="removeFilter" src="/content/Images/@Model.clientId/@Model.portalId/clear.png" class="deleteimage">
+                                    </a>
+                                </div>
+                            </div>
+                            indentValue += 10;
+                        }
+                    }
+
+                    @if (contentFilters != null && contentFilters.Count > 0)
+                    {
+                        <div class="medium-headers"> @Utilities.GetResourceText(Model.Resources, "RESULTSDISPLAY_ARTICLECONTENTTYPES")</div>
+                        foreach (var item in contentFilters)
+                        {
+                            <div style="margin-left: 10px;">
+                                <div style="font-size:12px">
+                                    @item.Title
+                                    <a href="/Search/RemoveFilter/@Model.clientId/@Model.portalId?text=@Model.Searchtext&id=@item.Id&filterType=@item.FilterType&clientId=@Model.clientId&portalId=@Model.portalId&fromwidget=@fromw">
+                                        <img id="removeFilter" src="/content/Images/@Model.clientId/@Model.portalId/clear.png" class="deleteimage">
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    }
+
+
+                    @if (formatFilters != null && formatFilters.Count > 0)
+                    {
+                        <div class="medium-headers">@Utilities.GetResourceText(Model.Resources, "RESULTSDISPLAY_ARTICLEFORMAT")</div>
+
+                        foreach (var item in formatFilters)
+                        {
+                            <div style="margin-left: 10px;">
+                                <div style="font-size:12px">
+                                    @item.Title
+                                    <a href="/Search/RemoveFilter/@Model.clientId/@Model.portalId?text=@Model.Searchtext&id=@item.Id&filterType=@item.FilterType&clientId=@Model.clientId&portalId=@Model.portalId&fromwidget=@fromw">
+                                        <img id="removeFilter" src="/content/Images/@Model.clientId/@Model.portalId/clear.png" class="deleteimage">
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                    <div>
+                        <a class="clearall right" style="margin-right:5px" href="/Search/RemoveAllFilter/@Model.clientId/@Model.portalId?text=@Model.Searchtext&clientId=@Model.clientId&portalId=@Model.portalId&fromwidget=@fromw">@Utilities.GetResourceText(Model.Resources, "FILTERDISPLAY_CLEARFILTERSTITLE")</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <p></p>
+
+        @if ((Model.Attributes != null && Model.Attributes.Count > 1 && Model.FilterDisplay.Attributes) || (Model.Categories != null && Model.Categories.Count > 1 && Model.FilterDisplay.Categories) ||
+                            (Model.KnowledgeBases != null && Model.KnowledgeBases.Count > 1 && Model.FilterDisplay.Kb) || (Model.ContentTypes != null && Model.ContentTypes.Count > 1 && Model.FilterDisplay.ContentTypes) ||
+                            (Model.Format != null && Model.Format.Count > 1 && Model.FilterDisplay.Formats))
+        {
+            <div class="highlight-header">@Utilities.GetResourceText(Model.Resources, "FILTERYOURRESULTS")</div>
+        }
+
+        @if (Model.FilterDisplay.Kb && ((Model.KnowledgeBases != null && Model.KnowledgeBases.Count > 1) || (kbFilters != null && kbFilters.Count > 0)))
+        {
+            <div class="row">
+
+                <div class="bordercontainer">
+                    <div class="medium-headers">
+                        @Utilities.GetResourceText(Model.Resources, "RESULTSDISPLAY_KBNAME")
+                    </div>
+
+                    @if (kbFilters != null && kbFilters.Count > 0)
+                    {
+                        <div class=" appliedfiltersbox">
+                            @{
+                        var parent = kbFilters.ElementAt(0);
+                        var count = 1;
+                        var lastItem = kbFilters.LastOrDefault();
+                            }
+                            <a href="/Search/RemoveAllFromFilterType/@Model.clientId/@Model.portalId?text=@Model.Searchtext&filterType=@FilterType.KnowledgeBase&clientId=@Model.clientId&portalId=@Model.portalId&fromwidget=@fromw" style="color:white!important">@Utilities.GetResourceText(Model.Resources, "CLEARALLFILTERTYPE") </a>
+
+                            @foreach (var item in kbFilters)
+                            {
+                                if (count < kbFilters.Count)
+                                {
+                                    <div class=" inline"> > </div>
+                                    <a href="/Search/RemoveFilter/@Model.clientId/@Model.portalId?text=@Model.Searchtext&id=@item.Id&filterType=@item.FilterType&clientId=@Model.clientId&portalId=@Model.portalId&fromwidget=@fromw" style="color:white!important"> @item.Title </a>
+                                    count++;
+                                }
+                            }<div class=" inline"> > </div>@lastItem.Title
+                        </div>
+                    }
+                    @if (Model.KnowledgeBases != null && Model.KnowledgeBases.Count > 1)
+                    {
+                        foreach (var item in Model.KnowledgeBases)
+                        {
+                            <ul class="searchfilterlinkstyle topicscontainer">
+                                <li>
+                                    <a class=" normal-links" href="/Search/GetSearch/@Model.clientId/@Model.portalId?text=@Model.Searchtext&kbid=@item.FilterId&title=@item.Title&filterUpdate=true&fromwidget=@fromw">@item.Title</a>
+                                </li>
+                            </ul>
+                        }
+                    }
+                </div>
+            </div>
+        }
+
+
+
+        @if (Model.FilterDisplay.Categories && ((Model.Categories != null && Model.Categories.Count > 0) || (catFilters != null && catFilters.Count > 0)))
+        {
+            <div class="row">
+                <div class="bordercontainer">
+                    <div class="medium-headers">@Utilities.GetResourceText(Model.Resources, "RESULTSDISPLAY_ARTICLECATEGORIES")</div>
+                    @if (catFilters != null && catFilters.Count > 0)
+                    {
+                        <div class=" appliedfiltersbox">
+                            @{
+                        var parent = catFilters.ElementAt(0);
+                        var count = 1;
+                        var lastItem = catFilters.LastOrDefault();
+                            }
+                            <a href="/Search/RemoveAllFromFilterType/@Model.clientId/@Model.portalId?text=@Model.Searchtext&filterType=@FilterType.category&clientId=@Model.clientId&portalId=@Model.portalId&fromwidget=@fromw" style="color:white!important"> @Utilities.GetResourceText(Model.Resources, "CLEARALLFILTERTYPE") </a>
+
+                            @foreach (var item in catFilters)
+                            {
+                                if (count < catFilters.Count)
+                                {
+                                    <div class=" inline"> > </div>
+                                    <a href="/Search/RemoveFilter/@Model.clientId/@Model.portalId?text=@Model.Searchtext&id=@item.Id&filterType=@item.FilterType&clientId=@Model.clientId&portalId=@Model.portalId&fromwidget=@fromw" style="color:white!important"> @item.Title </a>
+                                    count++;
+                                }
+                            }<div class=" inline"> > </div>@lastItem.Title
+                        </div>
+                    }
+                    @if (Model.Categories != null && Model.Categories.Count > 0)
+                    {
+                        foreach (var item in Model.Categories)
+                        {
+                            <ul class="searchfilterlinkstyle topicscontainer">
+                                <li>
+                                    @if (@item.ChildrenCount > 0)
+                                    { <img id="removeFilter" src="/content/Images/@Model.clientId/@Model.portalId/arrow_right.png" class="deleteimage" />}<a class="normal-links" href="/Search/GetSearch/@Model.clientId/@Model.portalId?text=@Model.Searchtext&catid=@item.FilterId&title=@item.Title&filterUpdate=true&fromwidget=@fromw">@item.Title</a>
+                                </li>
+                            </ul>
+
+                        }
+                    }
+                </div>
+            </div>
+        }
+
+
+        @if (Model.FilterDisplay.Attributes && ((Model.Attributes != null && Model.Attributes.Count > 0) || (attrFilters != null && attrFilters.Count > 0)))
+        {
+            <div class="row">
+                <div class="bordercontainer">
+                    <div class="medium-headers">@Utilities.GetResourceText(Model.Resources, "RESULTSDISPLAY_ARTICLEATTRIBUTES")</div>
+
+                    @if (attrFilters != null && attrFilters.Count > 0)
+                    {
+                        <div class=" appliedfiltersbox">
+                            @{
+                        var parent = attrFilters.ElementAt(0);
+                        var count = 1;
+                        var lastItem = attrFilters.LastOrDefault();
+                            }
+                            <a href="/Search/RemoveAllFromFilterType/@Model.clientId/@Model.portalId?text=@Model.Searchtext&filterType=@FilterType.Attribute&clientId=@Model.clientId&portalId=@Model.portalId&fromwidget=@fromw" style="color:white!important">@Utilities.GetResourceText(Model.Resources, "CLEARALLFILTERTYPE") </a>
+
+                            @foreach (var item in attrFilters)
+                            {
+                                if (count < attrFilters.Count)
+                                {
+                                    <div class=" inline"> > </div>
+                                    <a href="/Search/RemoveFilter/@Model.clientId/@Model.portalId?text=@Model.Searchtext&id=@item.Id&filterType=@item.FilterType&clientId=@Model.clientId&portalId=@Model.portalId&fromwidget=@fromw" style="color:white!important"> @item.Title </a>
+                                    count++;
+                                }
+                            }<div class=" inline"> > </div>@lastItem.Title
+                        </div>
+                    }
+                    @if (Model.Attributes != null && Model.Attributes.Count > 0)
+                    {
+                        foreach (var item in Model.Attributes)
+                        {
+                            <ul class="searchfilterlinkstyle topicscontainer">
+                                <li>
+                                    @if (@item.ChildrenCount > 0)
+                                    { <img id="removeFilter" src="/content/Images/@Model.clientId/@Model.portalId/arrow_right.png" class="deleteimage" />}<a class="normal-links" href="/Search/GetSearch/@Model.clientId/@Model.portalId?text=@Model.Searchtext&attributeid=@item.FilterId&title=@item.Title&filterUpdate=true&fromwidget=@fromw">@item.Title</a>
+                                </li>
+                            </ul>
+
+                        }
+                    }
+                </div>
+            </div>
+        }
+
+
+        @if (Model.FilterDisplay.ContentTypes && ((Model.ContentTypes != null && Model.ContentTypes.Count > 1) || (contentFilters != null && contentFilters.Count > 0)))
+        {
+            <div class="row">
+                <div class="bordercontainer">
+                    <div class="medium-headers">@Utilities.GetResourceText(Model.Resources, "RESULTSDISPLAY_ARTICLECONTENTTYPES")</div>
+                    @if (contentFilters != null && contentFilters.Count > 0)
+                    {
+                        <div class=" appliedfiltersbox">
+                            @{
+                        var parent = contentFilters.ElementAt(0);
+                        var count = 1;
+                        var lastItem = contentFilters.LastOrDefault();
+
+                            }
+                            <a href="/Search/RemoveAllFromFilterType/@Model.clientId/@Model.portalId?text=@Model.Searchtext&filterType=@FilterType.ContentType&clientId=@Model.clientId&portalId=@Model.portalId&fromwidget=@fromw" style="color:white!important"> @Utilities.GetResourceText(Model.Resources, "CLEARALLFILTERTYPE") </a>
+
+                            @foreach (var item in contentFilters)
+                            {
+                                if (count < contentFilters.Count)
+                                {
+                                    <div class=" inline"> > </div>
+                                    <a href="/Search/RemoveFilter/@Model.clientId/@Model.portalId?text=@Model.Searchtext&id=@item.Id&filterType=@item.FilterType&clientId=@Model.clientId&portalId=@Model.portalId&fromwidget=@fromw" style="color:white!important"> @item.Title </a>
+                                    count++;
+                                }
+                            }<div class=" inline"> > </div>@lastItem.Title
+                        </div>
+                    }
+                    @if (Model.ContentTypes != null && Model.ContentTypes.Count > 1)
+                    {
+                        foreach (var item in Model.ContentTypes)
+                        {
+                            <ul class="searchfilterlinkstyle topicscontainer">
+                                <li>
+                                    <a class=" normal-links" href="/Search/GetSearch/@Model.clientId/@Model.portalId?text=@Model.Searchtext&contentTypeId=@item.ContentIds&title=@item.ContentName&fromwidget=@fromw">@item.ContentName </a>
+                                </li>
+                            </ul>
+                        }
+                    }
+                </div>
+            </div>
+        }
+
+
+        @if (Model.FilterDisplay.Formats && ((Model.Format != null && Model.Format.Count > 1) || (formatFilters != null && formatFilters.Count > 0)))
+        {
+            <div class="row">
+                <div class="bordercontainer">
+                    <div class="medium-headers">@Utilities.GetResourceText(Model.Resources, "RESULTSDISPLAY_ARTICLEFORMAT")</div>
+                    @if (formatFilters != null && formatFilters.Count > 0)
+                    {
+                        <div class=" appliedfiltersbox">
+                            @{
+                        var parent = formatFilters.ElementAt(0);
+                        var count = 1;
+                        var lastItem = formatFilters.LastOrDefault();
+                            }
+                            <a href="/Search/RemoveAllFromFilterType/@Model.clientId/@Model.portalId?text=@Model.Searchtext&filterType=@FilterType.Format&clientId=@Model.clientId&portalId=@Model.portalId&fromwidget=@fromw" style="color:white!important">@Utilities.GetResourceText(Model.Resources, "CLEARALLFILTERTYPE") </a>
+
+                            @foreach (var item in formatFilters)
+                            {
+                                if (count < formatFilters.Count)
+                                {
+                                    <div class=" inline"> > </div>
+                                    <a href="/Search/RemoveFilter/@Model.clientId/@Model.portalId?text=@Model.Searchtext&id=@item.Id&filterType=@item.FilterType&clientId=@Model.clientId&portalId=@Model.portalId&fromwidget=@fromw" style="color:white!important"> @item.Title </a>
+                                    count++;
+                                }
+                            }<div class=" inline"> > </div>@lastItem.Title
+                        </div>
+                    }
+                    @if (Model.Format != null && Model.Format.Count > 1)
+                    {
+                        foreach (var item in Model.Format)
+                        {
+                            <ul class="searchfilterlinkstyle topicscontainer">
+                                <li>
+                                    <a class=" normal-links" href="/Search/GetSearch/@Model.clientId/@Model.portalId?text=@Model.Searchtext&format=@item.Extension&title=@item.Format&fromwidget=@fromw">@item.Format </a>
+                                </li>
+                            </ul>
+
+                        }
+                    }
+                </div>
+            </div>
+        }
+
+    </div>
+    }
+    else
+    {
+        <div id="searchfilterswrapper" class="large-3 columns"></div>
+    }
+    @{
+        var searchTextApplied = string.Empty;
+        if (!string.IsNullOrEmpty(Model.ModifiedSearchText))
+        {
+            searchTextApplied = Model.ModifiedSearchText;
+        }
+        else
+        {
+            searchTextApplied = Model.Searchtext;
+        }
+    }
+
+    <div id="searchcontentwrapper" class="large-9 columns">
+        <div id="searchboxwrapper" class="row searchbox">
+            @if(@Model.FromWidget==false)
+            {
+                <input id="searchtextbox" type="text" value="@searchTextApplied" />
+            }
+            else
+            {
+                <input id="searchtextbox" type="text" value="" />
+            }
+            <input id="searchbutton" type="image" src="@Model.SearchImageUrl" />
+        </div>
+
+        @{
+            if (Model.Searchtext != "*")
+            {
+                <div class="row filtersuggestions">
+                    @if (!string.IsNullOrEmpty(Model.ModifiedSearchText))
+                    {
+                        <div class="inline spellcorrection">
+                            @Utilities.GetResourceText(Model.Resources, "SHOWINGRESULTSFOR") <span class="correctedsearchtext"> @Model.ModifiedSearchText.</span>   @Utilities.GetResourceText(Model.Resources, "SEARCHINSTEADFOR")  <a class="spellcorrectionlink" href="/Search/GetSearch/@Model.clientId/@Model.portalId?text=@Model.Searchtext&searchFrom=@SearchFrom.SearchInsteadFor.ToString()&spellCheck=false&fromwidget=@fromw"> @Model.Searchtext</a>
+                        </div>
+                    }
+                </div>
+            }
+            if (Model.SearchResultsViewModel.Count == 0)
+            {
+                <div class="inline spellcorrection">
+                    @Utilities.GetResourceText(Model.Resources, "NORESULTFOUND")
+                </div>
+
+            }
+        }
+        <div class=" row searchresultcontainer searchresultsalignment">
+            @{
+                List<SearchResultsViewModel>
+                    searchResult = Model.SearchResultsViewModel;
+                var pagenatedList = searchResult.ToPagedList(Model.Page, Model.SearchResultsPerPage);
+
+                foreach (var item in pagenatedList)
+                {
+
+                    <div class="row">
+                        <hr />
+                        <div class="searchresultArticle">
+                            @if (item.SourceType == "Articles")
+{
+    var filetype = string.Empty;
+    if (item.FileType != "HTML" && Model.ResultsDisplay.FileTypeEnabled)
+    {
+        filetype = "[" + item.FileType + "]";
+    }
+
+    <a class="large-header" href="/Article/Index/@Model.clientId/@Model.portalId?id=@item.Id&fromwidget=@fromw&searchid=@Model.SearchId&isSearch=true">@filetype    @Html.Raw(HttpUtility.HtmlDecode(@item.Title))</a>
+}
+else
+{
+                                <a class="large-header" href="/SolutionFinder/GetSolutionFinderDetailsById/@Model.clientId/@Model.portalId?title=@item.Title&sfid=@item.SFId&sfcid=@item.SFCId&fromwidget=@fromw&searchid=@Model.SearchId&isSearch=true">     @Html.Raw(HttpUtility.HtmlDecode(@item.Title))</a>
+                            }
+                        </div>
+                        <p></p>
+                    </div>
+                    if (!string.IsNullOrEmpty(item.Summary))
+                    {
+                        <div class="row">
+                            <div class="inline articlesummary"> @Html.Raw(@item.Summary)</div>
+                        </div>
+                        <p></p>
+                    }
+                    <div class="row">
+                        @if (Model.ResultsDisplay.DateModifiedEnabled)
+                        {
+                        <div class="inline light-text">@Utilities.GetResourceText(Model.Resources, "RESULTSDISPLAY_DATEMODIFIED")</div>
+                        <div class="inline light-text">@item.Modified</div>
+                        }
+                        @if (item.KBName != null && item.KBName.Length > 0 && Model.ResultsDisplay.KbNameEnabled)
+                        {
+                            <div class="inline light-text">|</div>
+                            <div class="inline light-text">@item.KBName</div>
+                        }
+                        @if (item.Id != null && item.Id > 0 && Model.ResultsDisplay.ArticleIdEnabled)
+                        {
+                            <div class="inline light-text">|</div>
+                            <div class="inline light-text">#@item.Id</div>
+                        }
+                    </div>
+                    <div class="row">
+                        @if (item.Attributes != null && item.Attributes.Length > 0 && Model.ResultsDisplay.ArticleAttributesEnabled)
+                        {<div class="inline light-text">@Utilities.GetResourceText(Model.Resources, "RESULTSDISPLAY_ARTICLEATTRIBUTES")  @item.Attributes</div>}
+                    </div>
+                }
+                <div class="row"> <hr /></div>
+                
+                 <div class="row">
+                @{
+    if (Model.Searchtext != "*")
+    {
+        if (null != Model.SuggestionSearch && Model.SuggestionSearch.Count > 0)
+        {
+            <div class=" inline highlight-header"> @Utilities.GetResourceText(Model.Resources, "SUGGESTEDSEARCHES") </div>
+            int counter = 0;
+            <ul style=" list-style-type: none; margin-left: 0px;">                
+                    
+                     @foreach (var suggestion in Model.SuggestionSearch)
+                    {
+                        if (counter < 5) { 
+                        <li> <a class=" inline medium-header-links" href="/Search/GetSearch/@Model.clientId/@Model.portalId?text=@suggestion&searchFrom=@SearchFrom.Suggestion.ToString()&fromwidget=@fromw"> @suggestion </a>
+                        </li>
+                            counter++;
+                     }
+                   }
+
+            </ul>
+        }
+    }
+}
+            </div>
+                
+                if (searchResult.Count > Model.SearchResultsPerPage)
+                {
+                    <div class="pagedList pagination-centered ">
+                        @Html.PagedListPager(pagenatedList, page => Url.Action("/Paging", new
+                    {
+                        page,
+                        text = @Html.Raw(@Model.Searchtext),
+                        searchFrom = SearchFrom.Paging.ToString(),
+                        clientId = @Model.clientId,
+                        portalId = @Model.portalId,
+                        fromwidget = @fromw
+                    }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+                    </div>
+                }
+            }
+           
+        </div>
+    </div>
+</div>

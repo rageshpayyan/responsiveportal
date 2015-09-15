@@ -1,0 +1,53 @@
+﻿@model ResponsivePortal.Models.AdminLoginViewModel
+@using  ResponsivePortal.Resources
+
+@{
+    ViewBag.Title = AdminResources.PortalConfiguration;
+    Layout = "~/Views/shared/_AdminLayout.cshtml";
+}
+
+<link rel="stylesheet" href="~/Content/CSS/Admin.css">
+
+<div class="row">
+    <div>
+        <h1 class="loginh1"><strong>@AdminResources.MoxieFeature</strong></h1>
+    </div>
+    <div>
+        <h4 class="loginh4">@AdminResources.LoginForm</h4>
+    </div>
+</div>
+<div class="row"><div class="msg"><img src="~/Images/moxielogo.jpg" /></div></div>
+
+
+<section id="loginForm" >
+    @using (Html.BeginForm("Index", "Admin", new { clientId = ViewBag.ClientId }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="msg">     
+       @Html.Raw(HttpUtility.HtmlDecode(@ViewBag.ErrMsg))
+    </div>
+    <div class="row">
+        <div class="login"> 
+            <h1>@AdminResources.Login</h1> 
+            <h6 class="loginh6">@AdminResources.Username</h6>           
+                <div>
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.UserName)
+                </div>
+                     
+            <h6 class="loginh6">@AdminResources.Password</h6>   
+                <div>
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password)
+                </div>
+
+            <p class="submit"><input type="submit" value=@AdminResources.Login /></p>
+        </div>      
+      </div>   
+    <div>
+        <h5 class="loginh5">@AdminResources.MoxieCopyWrite.Replace("2012", System.DateTime.Now.Year.ToString())</h5>
+    </div>
+    }
+</section>
+
+

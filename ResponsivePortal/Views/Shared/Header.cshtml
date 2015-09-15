@@ -1,0 +1,94 @@
+﻿@model ResponsivePortal.Models.HeaderViewModel
+@{
+    ViewBag.Title = "Header";
+    Layout = null;
+}
+@Html.HiddenFor(x => x.clientId)
+@Html.HiddenFor(x => x.portalId)
+
+@if (Model.NavigationList.Count > 0)
+{
+            <div class="contain-to-grid hide-for-small">
+                <div class="headerBackground">
+                    <nav class="top-bar">
+                        <ul class="title-area"></ul>
+                        <section class="top-bar-section">
+                            <!-- Right Nav Section -->
+                            <ul class="left">
+                                @foreach (var item in Model.NavigationList)
+                                {
+                                    if (item.Selected)
+                                    {
+                                        if (item.Value == "article")
+                                        {
+                                            <li><a oid="@item.Value" hd="1" class="selectedMenuItem" href="/Search/GetSearch/@Model.clientId/@Model.portalId?text=*&fromwidget=true">@item.Text</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li><a oid="@item.Value" hd="1" class="selectedMenuItem" href="/@item.Value/Index/@Model.clientId/@Model.portalId?title=@item.Text">@item.Text</a></li>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (item.Value == "article")
+                                        {
+                                            <li><a oid="@item.Value" hd="1" class="regularMenuItem" href="/Search/GetSearch/@Model.clientId/@Model.portalId?text=*&fromwidget=true">@item.Text</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li><a oid="@item.Value" hd="1" class="regularMenuItem" href="/@item.Value/Index/@Model.clientId/@Model.portalId?title=@item.Text">@item.Text</a></li>
+                                        }
+                                    }
+                                }
+                            </ul>
+
+                            <ul class="right regularmenuitem">
+                                <li>@Html.Partial("_LoginPartial") </li>
+                            </ul>
+                        </section>
+                    </nav>
+
+                </div>
+            </div>
+
+            <div class="tab-bar show-for-small">
+                <div class="row collapse">
+                    <div class="small-12 columns">
+                        <a class="left-off-canvas-toggle menu-icon left" href="#">
+                            <span></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="left-off-canvas-menu">
+                <ul class="off-canvas-list">
+                    @foreach (var item in Model.NavigationList)
+                    {
+                        if (item.Selected)
+                        {
+                            if (item.Value == "article")
+                            {
+                                <li><a oid="@item.Value" hd="1" class="selectedMenuItem" href="/Search/GetSearch/@Model.clientId/@Model.portalId?text=*&fromwidget=true">@item.Text</a></li>
+                            }
+                            else
+                            {
+                                <li><a oid="@item.Value" hd="1" class="selectedMenuItem" href="/@item.Value/Index/@Model.clientId/@Model.portalId?title=@item.Text">@item.Text</a></li>
+                            }
+                        }
+                        else
+                        {
+                            if (item.Value == "article")
+                            {
+                                <li><a oid="@item.Value" hd="1" class="regularMenuItem" href="/Search/GetSearch/@Model.clientId/@Model.portalId?text=*&fromwidget=true">@item.Text</a></li>
+                            }
+                            else
+                            {
+                                <li><a oid="@item.Value" hd="1" class="regularMenuItem" href="/@item.Value/Index/@Model.clientId/@Model.portalId?title=@item.Text">@item.Text</a></li>
+                            }
+                        }
+                    }
+                    <li>@Html.Partial("_MobLoginPartial") </li>
+                </ul>
+            </div>
+            <a class="exit-off-canvas" href="#"></a>
+}

@@ -1,0 +1,514 @@
+﻿@model ResponsivePortal.Models.SolutionFinderDetailsViewModel
+@using ResponsivePortal.Resources
+
+@{
+    ViewBag.Title = @Utilities.GetResourceText(Model.Resources,"TITLEDETAILS");
+    Layout = "~/Views/shared/_Layout.cshtml";
+}
+@Html.HiddenFor(x => x.clientId)
+@Html.HiddenFor(x => x.portalId)
+@if (Request.IsAuthenticated)
+    {
+@Html.HiddenFor(x => x.SessionTimeOutWarning)
+@Html.HiddenFor(x => x.SessionTimedOut)
+}
+<link href="~/Content/Styles/@Model.clientId/@Model.portalId/solutionfinder.css" rel="stylesheet" />
+
+@section head
+{
+    @if (Model.ArticlePartialViewModel !=null)
+    { 
+        @Html.Raw(HttpUtility.HtmlDecode(Model.ArticlePartialViewModel.ArticleItem.Content.HeaderContent)); 
+    }
+}
+@section AfterHeaderBeforeBodyContent
+{
+    @if (Model.ArticlePartialViewModel != null)
+    { 
+        @Html.Raw(HttpUtility.HtmlDecode(@Model.ArticlePartialViewModel.ArticleItem.Content.AfterHeaderBeforeBodyContent))
+    }
+}
+
+@section AfterBodyContent
+{
+    @if (Model.ArticlePartialViewModel != null)
+    {
+        @Html.Raw(HttpUtility.HtmlDecode(@Model.ArticlePartialViewModel.ArticleItem.Content.AfterBodyContent))
+    }
+}
+@{
+    var fromw = "false";
+    if (@Model.FromWidget)
+    {
+        fromw = "true";
+    }
+}
+@if (Model.showBreadcrumb)
+{
+    <div class="row">
+        <div class=" hide-for-small-only large-12 columns breadcrumbOffset">
+            @foreach (var item in Model.BreadcrumbViewModel.NavigationList)
+            {
+                if (item.Selected)
+                {
+                    <div class="inline breadcrumb">@Html.Raw(HttpUtility.HtmlDecode(item.Text))</div>
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(item.Text))
+                    {
+                        if (item.Value=="Search")
+                        {
+                            if (@Model.FromWidget)
+                            {
+                                <a href="/@item.Value/getsearch/@Model.clientId/@Model.portalId?title=@item.Text&fromwidget=@fromw" class="inline breadcrumb">@Utilities.GetResourceText(Model.Resources, "SOLUTIONFINDER_SEARCHRESULT") > </a>
+                            }
+                            else
+                            {
+                                <a href="/@item.Value/getsearch/@Model.clientId/@Model.portalId?title=@item.Text" class="inline breadcrumb">@Utilities.GetResourceText(Model.Resources, "SOLUTIONFINDER_SEARCHRESULTFOR") @Html.Raw(HttpUtility.HtmlDecode(item.Text)) > </a>
+                            }
+                        }
+                        else
+                        { 
+                            <a href="/@item.Value/Index/@Model.clientId/@Model.portalId?title=@item.Text" class="inline breadcrumb">@Html.Raw(HttpUtility.HtmlDecode(item.Text)) > </a>
+                        }
+                    }
+                }
+            }
+        </div>
+    </div>
+    <hr class="hide-for-small-only large-12 columns separator" />
+}
+
+@if (Model.SolutionFinder.Equals(null))
+{
+    <table border="0" cellpadding="0" cellspacing="0" class="solFinderDet_OuterTable"  >
+        <tr>
+            <td class="solFinderDet_BreadcrumbOuter"></td>
+                <td class="solFinderDet_BreadcrumbInnerCell">
+                    <div class="solFinderDet_BreadcrumbInner">
+                    </div>
+                </td>
+        </tr>
+        <tr class="solFinderDet_TileColor" >
+            <td valign="top" class="solFinderDet_BreadcrumbOuter" >
+                <div class="solFinderDet_solFinderHeader">@Html.Raw(HttpUtility.HtmlDecode(Model.SolutionFinderTileViewModel.Title))</div>
+                @if ((Model.History == null) || (Model.History.Count < 1))
+                {
+                    <div class="solFinderTileContainer">
+                        <img class="solFinderIcon" src="@Model.SolutionFinderTileViewModel.Icon" />
+                        <div class="solFinderDet_TileDescriptor">@Html.Raw(HttpUtility.HtmlDecode(Model.SolutionFinderTileViewModel.Content))</div>
+                    </div>
+                }   
+                else
+                {
+                    <div class="solFinderSmallTileContainer">
+                        @{
+                    var count = 0;
+                    var total = Model.History.Count;
+                        }
+                        @foreach (var item in Model.History)
+                        {
+                            count = count + 1;
+                            <div class="solutioFinderNavigation" oid="@item.SolutionFinderId ">@Html.Raw(HttpUtility.HtmlDecode(item.Question)) </div>
+                            if (count == 1)
+                            {
+                                <div><a class="solutioFinderNavigationAnswer" firsthsoid="item.ChoiceId" firsthsfoid="firsthsfoid">@Html.Raw(HttpUtility.HtmlDecode(item.Answer))</a></div>
+                            }
+                            else
+                            {
+                                <div><a class="solutioFinderNavigationAnswer" hsoid="item.ChoiceId" hsfoid="hsfoid">@Html.Raw(HttpUtility.HtmlDecode(item.Answer))</a></div>
+                            }
+
+                            <br />
+                            <br />
+                        }
+                    </div>
+                }
+            </td>
+            <td valign="top" class="solFinderDet_NullPadding">
+                <div class="solFinderDet_Separator">
+                    <table border="0" class="solFinderDet_TableBorder">
+                        <tr>
+                            <td valign="top">
+                                <div class="solFinderDet_InlineTable"><div class="solFinderDet_HeaderInbox">No further choices found for the selected solution finder</div></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+                return;
+}
+<div id="solutionFinderMainContainer" sid="@Model.SolutionFinderTileViewModel.Id" pid="@Model.ImmediatePId" 
+     cid="@Model.ChoiceId" class="solFinderDet_MainContainer">
+    <table border="0" cellpadding="0" cellspacing="0" class="solFinderDet_ContainerTable" >
+        <tr>
+            <td class="solFinderDet_BreadcrumbOffset solFinderDet_TileColor" ></td>
+            <td class="solFinderDet_TileColor">
+                <div id="divShowHistory" class="displayNone">Click to show history</div>
+            </td>
+        </tr>
+        <tr class="solFinderDet_TileColor">
+            <td valign="top" class="hide-for-small-only solFinderDet_HistoryLayout solFinderDet_TileColor">
+                <div class="solFinderDet_solFinderHeader">@Html.Raw(HttpUtility.HtmlDecode(Model.SolutionFinderTileViewModel.Title))</div>
+                @if ((Model.History == null) || (Model.History != null && Model.History.Count < 1))
+                {
+                    <div class="solFinderIndex_TileContainer">
+                        <img class="solFinderIcon" src="@Model.SolutionFinderTileViewModel.Icon" />
+                        <div class="solFinderDet_TileDescriptorNoMargin">@Html.Raw(HttpUtility.HtmlDecode(Model.SolutionFinderTileViewModel.Content))</div>
+                    </div>
+                }
+                else
+                {
+                    var count = 0;
+                    var total = Model.History.Count;
+
+                    <div class="solFinderSmallTileContainer">
+                        @foreach (var item in Model.History)
+                        {
+                            count = count + 1;
+                            <div class="solutioFinderNavigation" oid="@item.SolutionFinderId">@Html.Raw(HttpUtility.HtmlDecode(item.Question)) </div>
+                            <div></div>
+                            if (count == 1)
+                            {
+                                <div><a class="solutioFinderNavigationAnswer" firsthsoid="item.ChoiceId" firsthsfoid="firsthsfoid">@Html.Raw(HttpUtility.HtmlDecode(item.Answer))</a></div>
+                            }
+                            else
+                            {
+                                <div><a class="solutioFinderNavigationAnswer" hsoid="@item.ChoiceId" hsfoid="hsfoid">@Html.Raw(HttpUtility.HtmlDecode(item.Answer))</a></div>
+                            }
+                            <br />
+                            <br />
+                        }
+                    </div>
+                }
+            </td>
+            <td valign="top" class="solFinderDet_NullPadding solFinderDet_TileColor">
+                <div class="solFinderDet_Separator">
+                    <table border="0" class="solFinderDet_TableBorder">
+                        <tr>
+                            <td valign="top">
+                                <div class="solFinderDet_InlineTable" style="display:inline !important;">
+                                    <div id="solFindQuestion" class="solFinderDet_OptionsDescr">@Html.Raw(HttpUtility.HtmlDecode(Model.SolutionFinder.Question))</div>
+                                    @foreach (var item in Model.SolutionFinder.Articles)
+                                    {
+                                        <a class="solFinderDet_solutionFinderLink" oid="@item.Id" oidkb="@item.KbId" sfoid="sfoid">@Html.Raw(HttpUtility.HtmlDecode(@item.Title))</a>
+                                    }
+                                    <div class="solFinderDet_solFinderOptionsContainerOffset">
+                                        @if (Model.SolutionFinder.Choices.Count > 0)
+                                        {
+                                            foreach (var item in Model.SolutionFinder.Choices)
+                                            {
+                                                <div>
+
+                                                    <input id="solFinderOptions_@item.SolutionFinderId" oid="@item.SolutionFinderId"
+                                                           inp="choice"
+                                                           oidname="@item.Name" class="solFinderOptions" type="radio" name="solFinderOptions" />
+
+                                                    <div class="solFinderOptions" inp="choice" oid="@item.SolutionFinderId">@item.Name</div>
+                                                </div>
+
+                                            }
+                                        }
+                                    </div>
+                                    @if (Model.History.Count > 0)
+                                    {
+                                        <div id="solutionFinderPrevious" oid="@Model.SolutionFinder.SolutionFinderId" class="inline solFinderDet_ButtonActive">@Utilities.GetResourceText(Model.Resources, "SOLUTIONFINDER_PREVIOUS")</div>
+                                    }
+                                    @if ((Model.SolutionFinder.Choices != null) && (Model.SolutionFinder.Choices.Count > 0))
+                                    {
+                                        <div id="solutionFinderNext" oid="@Model.SolutionFinder.SolutionFinderId" class="inline solFinderDet_ButtonDisabled">@Utilities.GetResourceText(Model.Resources, "SOLUTIONFINDER_NEXT")</div>
+                                    }
+                                </div>
+                            </td>
+                            @if (Model.ArticlePartialViewModel != null)
+                            {
+                                <td valign="top">
+                                    <div class="solFinderDet_horizSeparator"></div>
+                                </td>
+                                <td valign="top">
+                                    <div id="solutionFinderArticle" class="solFinderDet_ArtContainer">
+                                        @{Html.RenderPartial("..\\Shared\\ArticlePartial", Model.ArticlePartialViewModel);}
+                                        <div id="articleClose" class="solFinderDet_Close">
+                                            <img id="removeFilter" src="/content/Images/@Model.clientId/@Model.portalId/clear.png" class="deleteImage">
+                                        </div>
+                                    </div>
+                                </td>
+                            }
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+
+<form method="POST" id="signInForm" name="signInForm" action=""></form>
+<script>
+    @functions{
+        public string TokenHeaderValue()
+        {
+            string cookieToken, formToken;
+            AntiForgery.GetTokens(null, out cookieToken, out formToken);
+            return cookieToken + ":" + formToken;                
+        }
+    }
+    $(document).ready(function () {
+        var clientId = document.getElementById("clientId").value;
+        var portalId = document.getElementById("portalId").value;
+        $('#articleClose').click(function (e) {
+            e.preventDefault();
+            var form = $('#signInForm');
+            form.attr("action", "/SolutionFinder/GetSolutionFinderDetailsWithArticleByID/" + clientId + "/" + portalId);
+            var artId = 0;
+            var psfid = $("#solutionFinderMainContainer").attr('pid');
+            var sfId = $("#solutionFinderMainContainer").attr('sid');
+            var choiceId = $("#solutionFinderMainContainer").attr('cid');
+            form.append(
+                $(document.createElement('input'))
+                    .attr('type', 'hidden')
+                    .attr('name', 'parentsolutionId')
+                    .attr('value', psfid)
+            );
+            form.append(
+                $(document.createElement('input'))
+                    .attr('type', 'hidden')
+                    .attr('name', 'solutionId')
+                    .attr('value', sfId)
+            );
+            form.append(
+                $(document.createElement('input'))
+                    .attr('type', 'hidden')
+                    .attr('name', 'choiceId')
+                    .attr('value', choiceId)
+            );
+            form.append(
+                $(document.createElement('input'))
+                    .attr('type', 'hidden')
+                    .attr('name', 'articleId')
+                    .attr('value', artId)
+            );
+            form.submit();
+        });
+        $('#solutionFinderPrevious').click(function (e) {
+            var form = $('#signInForm');
+            form.attr("action", "/SolutionFinder/GetPreviousSolutionFinderDetailsByIdWithParams/" + clientId + "/" + portalId);
+            var psfid = $("#solutionFinderMainContainer").attr('pid');
+            var sfId = $("#solutionFinderMainContainer").attr('sid');
+            var choiceId = $("#solutionFinderMainContainer").attr('cid');
+            var answer = "";
+            form.append(
+                $(document.createElement('input'))
+                    .attr('type', 'hidden')
+                    .attr('name', 'parentsolutionId')
+                    .attr('value', psfid)
+            );
+            form.append(
+                $(document.createElement('input'))
+                    .attr('type', 'hidden')
+                    .attr('name', 'solutionId')
+                    .attr('value', sfId)
+            );
+            form.append(
+                $(document.createElement('input'))
+                    .attr('type', 'hidden')
+                    .attr('name', 'choiceId')
+                    .attr('value', choiceId)
+            );
+            form.append(
+                $(document.createElement('input'))
+                    .attr('type', 'hidden')
+                    .attr('name', 'answer')
+                    .attr('value', htmlEncode(answer))
+            );
+            form.submit();
+        });
+
+        $('[inp="choice"]').each(function () {
+            $(this).click(function (e) {
+                $('#solutionFinderNext').removeClass("solFinderDet_ButtonDisabled").addClass("solFinderDet_ButtonActive");
+                if ($(this).prop("tagName") == "DIV") {
+                    $("#solFinderOptions_" + $(this).attr('oid')).prop('checked', true);
+                }
+            });
+        });
+    });
+    $('#solutionFinderNext').click(function (e) {
+        var clientId = document.getElementById("clientId").value;
+        var portalId = document.getElementById("portalId").value;
+        var val = $('input:radio[name=solFinderOptions]:checked');
+        if (val.attr("id") != undefined) {
+          //  var psfid = $("#solutionFinderMainContainer").attr('pid');
+            var sfId = $("#solutionFinderMainContainer").attr('sid');//solution ID
+            var psfid = $("#solutionFinderMainContainer").attr('cid');// current solutuion will be previous
+            var choiceId = val.attr('oid');//selection will be choice
+            var question = $("#solFindQuestion").html();
+            var answer = val.attr('oidname');
+            var solFinderName = $("#solFinderName").html();
+            var form = $('#signInForm');
+            form.attr("action", "/SolutionFinder/GetSolutionFinderDetailsByIdWithParams/" + clientId + "/" + portalId);
+            form.append(
+                $(document.createElement('input'))
+                    .attr('type', 'hidden')
+                    .attr('name', 'parentsolutionId')
+                    .attr('value', psfid)
+            );
+            form.append(
+                $(document.createElement('input'))
+                    .attr('type', 'hidden')
+                    .attr('name', 'solutionId')
+                    .attr('value', sfId)
+            );
+            form.append(
+                $(document.createElement('input'))
+                    .attr('type', 'hidden')
+                    .attr('name', 'choiceId')
+                    .attr('value', choiceId)
+            );
+            form.append(
+                $(document.createElement('input'))
+                    .attr('type', 'hidden')
+                    .attr('name', 'nav')
+                    .attr('value', false)
+            );
+            form.append(
+                $(document.createElement('input'))
+                    .attr('type', 'hidden')
+                    .attr('name', 'answer')
+                    .attr('value',  htmlEncode(answer))
+            );
+            form.submit();
+        }
+    });
+    $('a[sfoid="sfoid"]').each(function () {
+        var clientId = document.getElementById("clientId").value;
+        var portalId = document.getElementById("portalId").value;
+        $(this).click(function (e) {
+            e.preventDefault();
+            var form = $('#signInForm');
+            form.attr("action", "/SolutionFinder/GetSolutionFinderDetailsWithArticleByID/" + clientId + "/" + portalId);
+            var artId = $(this).attr('oid');
+            var psfid = $("#solutionFinderMainContainer").attr('pid');
+            var sfId = $("#solutionFinderMainContainer").attr('sid');
+            var choiceId = $("#solutionFinderMainContainer").attr('cid');
+            form.append(
+                $(document.createElement('input'))
+                    .attr('type', 'hidden')
+                    .attr('name', 'parentsolutionId')
+                    .attr('value', psfid)
+            );
+            form.append(
+                $(document.createElement('input'))
+                    .attr('type', 'hidden')
+                    .attr('name', 'solutionId')
+                    .attr('value', sfId)
+            );
+            form.append(
+                $(document.createElement('input'))
+                    .attr('type', 'hidden')
+                    .attr('name', 'choiceId')
+                    .attr('value', choiceId)
+            );
+            form.append(
+                $(document.createElement('input'))
+                    .attr('type', 'hidden')
+                    .attr('name', 'articleId')
+                    .attr('value', artId)
+            );
+            form.submit();
+        });
+    });
+    $('a[hsfoid="hsfoid"]').each(function () {
+
+        var clientId = document.getElementById("clientId").value;
+        var portalId = document.getElementById("portalId").value;
+        var val = $('input:radio[name=solFinderOptions]:checked');
+        $(this).click(function (e) {
+            var form = $('#signInForm');
+            form.attr("action", "/SolutionFinder/GetSolutionFinderDetailsByIdWithParams/" + clientId + "/" + portalId);
+            var choiceId = $(this).attr('hsoid');
+            var psfid = $("#solutionFinderMainContainer").attr('pid');
+            var sfId = $("#solutionFinderMainContainer").attr('sid');
+            var question = $("#solFindQuestion").html();
+            var answer = val.attr('oidname');
+            var solFinderName = $("#solFinderName").html();
+            form.append(
+                $(document.createElement('input'))
+                    .attr('type', 'hidden')
+                    .attr('name', 'parentsolutionId')
+                    .attr('value', psfid)
+            );
+            form.append(
+                $(document.createElement('input'))
+                    .attr('type', 'hidden')
+                    .attr('name', 'solutionId')
+                    .attr('value', sfId)
+            );
+            form.append(
+                $(document.createElement('input'))
+                    .attr('type', 'hidden')
+                    .attr('name', 'choiceId')
+                    .attr('value', choiceId)
+            );
+            form.append(
+                $(document.createElement('input'))
+                    .attr('type', 'hidden')
+                    .attr('name', 'nav')
+                    .attr('value', true)
+            );
+            form.append(
+                $(document.createElement('input'))
+                    .attr('type', 'hidden')
+                    .attr('name', 'answer')
+                    .attr('value', htmlEncode(answer))
+            );
+            form.submit();
+        });
+    });
+    $('a[firsthsfoid="firsthsfoid"]').each(function () {
+
+        var clientId = document.getElementById("clientId").value;
+        var portalId = document.getElementById("portalId").value;
+       
+        $(this).click(function (e) {
+            e.preventDefault();
+            var solutionId = $("#solutionFinderMainContainer").attr('sid');
+            //var url = "/SolutionFinder/GetSolutionFinderDetails/" + clientId + "/" + portalId + "?solutionId=" + solutionId;
+            //window.location.href = url;
+            $.ajax({
+                url: '/SolutionFinder/ValidateRequestHeader/' + clientId + '/' + portalId,
+                dataType: "json",
+                type: "POST",
+                contentType: 'application/json; charset=utf-8',
+                headers: {
+                    'RequestVerificationToken': '@TokenHeaderValue()'
+                },
+                success: function (data) {
+                    if (data.Message) {
+                        if (data.Message == "success") {
+                            var url = "/SolutionFinder/GetSolutionFinderDetails/" + clientId + "/" + portalId + "?solutionId=" + solutionId;
+                            window.location.href = url;
+                        }
+                    }
+                },
+                error: function (xhr, status, error) {
+                    //var err = eval("(" + xhr.responseText + ")");
+                    //alert(err.Message);
+                }
+            });
+        });
+    });
+
+    function htmlEncode(value) {
+        //create a in-memory div, set it's inner text(which jQuery automatically encodes)
+        //then grab the encoded contents back out.  The div never exists on the page.
+        return $('<div/>').text(value).html();
+    }
+
+</script>
+
+

@@ -1,0 +1,125 @@
+﻿@model ResponsivePortal.Models.SolutionFinderViewModel
+@using ResponsivePortal.Resources
+
+@{
+    ViewBag.Title = @Utilities.GetResourceText(Model.Resources, "TITLE");
+    Layout = "~/Views/shared/_Layout.cshtml";
+}
+@Html.HiddenFor(x => x.clientId)
+@Html.HiddenFor(x => x.portalId)
+@if (Request.IsAuthenticated)
+    {
+@Html.HiddenFor(x => x.SessionTimeOutWarning)
+@Html.HiddenFor(x => x.SessionTimedOut)
+}
+<link href="~/Content/Styles/@Model.clientId/@Model.portalId/solutionfinder.css" rel="stylesheet" />
+
+@if (Model.showBreadcrumb)
+{
+    <div class="row">
+        <div class=" hide-for-small-only large-12 columns breadcrumbOffset">
+            @foreach (var item in Model.BreadcrumbViewModel.NavigationList)
+            {
+                if (item.Selected)
+                {
+                    <div class="inline breadcrumb">@Html.Raw(HttpUtility.HtmlDecode(item.Text))</div>
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(item.Text))
+                    {
+                        <a href="/@item.Value/Index/@Model.clientId/@Model.portalId?title=@item.Text" class="inline breadcrumb">@Html.Raw(HttpUtility.HtmlDecode(item.Text)) > </a>
+                    }
+                }
+            }
+        </div>
+    </div>
+    <hr class="large-12 columns separator" />
+}
+
+<div class="row solFinderDet_solFinderContentOffset" >
+
+        <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-4 columns text-center">
+            @foreach (var item in Model.SolutionFinderTiles)
+            {
+                <li class="solFinderIndex_Tile">
+                    <img class="solFinderIndex_Icon" sfid=@item.Id src="@item.Icon" sfoid="{'Id':@item.Id , 'Icon': '@item.Icon','Title':'@item.Title', 'Content':'@item.Content'}" />
+                    <a class="solFinderIndex_Title" sfid=@item.Id sfoid="{'Id':@item.Id , 'Icon': '@item.Icon','Title':'@item.Title', 'Content':'@item.Content'}">@Html.Raw(HttpUtility.HtmlDecode(item.Title))</a>
+                    <span class="solFinderIndex_Descr">@item.Content</span>
+                </li>
+            }
+        </ul>
+
+</div>
+
+<form method="POST" id="signInForm" name="signInForm" action=""></form>
+<script>
+     @functions{
+         public string TokenHeaderValue()
+         {
+             string cookieToken, formToken;
+             AntiForgery.GetTokens(null, out cookieToken, out formToken);
+             return cookieToken + ":" + formToken;                
+         }
+     }
+    $(document).ready(function () {
+        var clientId = document.getElementById("clientId").value;
+        var portalId = document.getElementById("portalId").value;
+        $('[sfoid]').each(function () {
+            $(this).click(function (e) {
+
+                e.preventDefault();
+
+                var info = $(this).attr('sfoid');
+                var solutionId = $(this).attr('sfid');
+                //var url = "/SolutionFinder/GetSolutionFinderDetails/" + clientId + "/" + portalId + "?solutionId=" + solutionId;
+                //window.location.href = url;
+
+                $.ajax({
+                    url: '/SolutionFinder/ValidateRequestHeader/' + clientId + '/' + portalId,
+                    dataType: "json",
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    headers: {
+                        'RequestVerificationToken': '@TokenHeaderValue()'
+                    },
+                    success: function (data) {
+                        if (data.Message) {
+                            if (data.Message == "success") {
+                                var url = "/SolutionFinder/GetSolutionFinderDetails/" + clientId + "/" + portalId + "?solutionId=" + solutionId;
+                                window.location.href = url;
+                            }
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        //var err = eval("(" + xhr.responseText + ")");
+                        //alert(err.Message);
+                    }
+                });
+            });
+        });
+        $(function () {
+            var maxHeight = 0;
+            $('.solFinderIndex_Tile').each(function () {
+                if ($(this).height() > maxHeight) {
+                    maxHeight = $(this).height();
+                }
+            });
+            $('.solFinderIndex_Tile').each(function () {
+                $(this).height(maxHeight);
+            });
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+

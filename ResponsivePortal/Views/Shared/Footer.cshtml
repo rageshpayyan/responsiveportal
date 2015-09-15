@@ -1,0 +1,20 @@
+﻿@model ResponsivePortal.Models.FooterViewModel
+
+@{
+    ViewBag.Title = "Footer";
+    Layout = null;
+}
+<div class="row">
+   @Html.Raw(HttpUtility.HtmlDecode(@Model.Content))
+</div>
+<script>
+    var g_LocateFooterHelper = null;
+
+    $(window).resize(function () {
+        if (g_LocateFooterHelper == null) {
+            g_LocateFooterHelper = new Controls.LocateFooterHelper();
+        }
+        g_LocateFooterHelper.ProcessScreenChange();
+    });
+</script>
+

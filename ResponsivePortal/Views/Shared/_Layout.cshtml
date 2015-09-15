@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Html.Raw(HttpUtility.HtmlDecode(@ViewBag.Title))</title>
+    @RenderSection("PageHeadStylesheets", required: false)
+    @{
+        var commonViewModel = (ResponsivePortal.Models.CommonViewModel)ViewData["CommonViewModel"];// (ResponsivePortal.Models.CommonViewModel)Session["CommonViewModel"];
+    }
+    <link href="/Content/Styles/@commonViewModel.HeaderViewModel.clientId/@commonViewModel.HeaderViewModel.portalId/foundation.min.css" rel="stylesheet" />
+    <link href="/Content/Styles/@commonViewModel.HeaderViewModel.clientId/@commonViewModel.HeaderViewModel.portalId/portal.css" rel="stylesheet" />
+    <link href="/Content/Styles/@commonViewModel.HeaderViewModel.clientId/@commonViewModel.HeaderViewModel.portalId/normalize.css" rel="stylesheet" />
+    <link href="/Content/Styles/@commonViewModel.HeaderViewModel.clientId/@commonViewModel.HeaderViewModel.portalId/nav.css" rel="stylesheet" />
+    <link href="~/Content/CSS/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Content/Scripts/@commonViewModel.HeaderViewModel.clientId/@commonViewModel.HeaderViewModel.portalId/portal.js"></script>
+
+    @RenderSection("head", required: false)
+    @if (Request.IsAuthenticated)
+    {
+        @Html.Hidden("loggedIn", "loggedIn");
+    }
+    <script src="~/Content/JS/modernizr.js"></script>
+    <script src="~/content/js/jquery.js"></script>   
+</head>
+@RenderSection("AfterHeaderBeforeBodyContent", required: false)
+<body>
+    @Html.Raw(HttpUtility.HtmlDecode(commonViewModel.HeaderViewModel.BeforePortal))
+    <div class="off-canvas-wrap">
+    <div class="inner-wrap">
+    @{Html.RenderPartial("Header", commonViewModel.HeaderViewModel);}
+     
+                @RenderBody()
+            </div>
+            </div>
+
+            <div id="offsetDiv" class="layoutOffset"></div>
+            <div id="footer" class="footerBackground">
+                @{Html.RenderPartial("Footer", commonViewModel.FooterViewModel);}
+            </div>
+            <script src="~/Content/JS/foundation.min.js"></script>
+            <script src="~/Content/JS/foundation.offcanvas.js"></script>
+            <script src="~/Content/JS/Resize.js"></script>
+            <script src="~/Content/JS/jquery-ui-1.10.4.min.js"></script>
+            <script>
+                var sessionTimeOutWarning = "";
+                var sessionTimedOut = "";
+                if (document.getElementById("SessionTimeOutWarning") != null) {
+                    sessionTimeOutWarning = document.getElementById("SessionTimeOutWarning").value;
+                }
+                if (document.getElementById("SessionTimedOut") != null) {
+                    sessionTimedOut = document.getElementById("SessionTimedOut").value;
+                }
+                $(document).foundation();
+                Timeout = 25919940000; // Milli-Seconds 29.99 days
+                Timedout = 25920000000; // Milli-Seconds 30 days
+                var loggedIn = document.getElementById("loggedIn");
+                if (null != loggedIn) {
+                    setTimeout("AlertUser();", Timeout);
+                    setTimeout("AlertUserTimedOut();", Timedout);
+                    function AlertUser() {
+                        var ans = confirm(sessionTimeOutWarning);
+                        if (ans) {
+                            window.location.reload();
+                        }
+                    }
+                    function AlertUserTimedOut() {
+                        window.alert(sessionTimedOut);
+                    }
+
+                }
+
+            </script>
+
+</body>
+@RenderSection("AfterBodyContent", required: false)
+</html>

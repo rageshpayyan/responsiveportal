@@ -1,0 +1,42 @@
+﻿@model ResponsivePortal.Models.CategoriesViewModel
+@{
+    ViewBag.Title = "Categories";
+    Layout = null;
+}
+<link href="~/Content/Styles/@Model.clientId/@Model.portalId/home.css" rel="stylesheet" />
+@if (Model.Categories != null && Model.Categories.Count > 0)
+{
+    <div class="widget-header">@Model.Title</div>
+    <br />
+    <div class="row">
+        <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4 text-center">
+            @foreach (var item in Model.Categories)
+            {
+                <li>
+                    @if (Model.BrowseEnabled)
+                    {
+                        <div class="categorywidget-image-size"><a class="medium-header-links" href="/browse/CategoryBrowse/@Model.clientId/@Model.portalId?pcatId=@item.Category.Id&title=@item.Category.Name"><img src="@item.Category.ImageUrl" title="@item.Category.Name" /></a></div><div><a class="medium-header-links" href="/browse/CategoryBrowse/@Model.clientId/@Model.portalId?pcatId=@item.Category.Id&title=@item.Category.Name">@item.Category.Name</a></div>
+                    }
+                    else
+                    { 
+                        <div class="categorywidget-image-size"><a class="medium-header-links" href="/search/getsearch/@Model.clientId/@Model.portalId?text=*&catid=@item.Category.Id&title=@item.Category.Name&fromwidget=true&widgetsearch=1"><img src="@item.Category.ImageUrl" title="@item.Category.Name" /></a></div><div><a class="medium-header-links" href="/search/getsearch/@Model.clientId/@Model.portalId?text=*&catid=@item.Category.Id&title=@item.Category.Name&fromwidget=true&widgetsearch=1">@item.Category.Name</a></div>
+                    }
+                    <ul style="list-style-type:none" class="text-left">					
+                        @foreach (var catItem in item.ContentItems)
+                        {					     
+                             if (Model.BrowseEnabled)
+                             {
+                                <li><a class="normal-links" href="/browse/CategoryBrowse/@Model.clientId/@Model.portalId?catid=@catItem.Id.ToString()&title=@catItem.Title.&pcatId=@item.Category.Id&pTitle=@item.Category.Name">@catItem.Title</a> </li>
+                             }
+                             else
+                             {
+                                 <li><a class="normal-links" href="/search/getsearch/@Model.clientId/@Model.portalId?text=*&catid=@catItem.Id.ToString()&title=@item.Category.Name&fromwidget=true&widgetsearch=1">@catItem.Title</a></li>
+                             }                       
+						 
+                        }
+                  </ul>
+                </li>
+            }
+        </ul>
+    </div>
+}

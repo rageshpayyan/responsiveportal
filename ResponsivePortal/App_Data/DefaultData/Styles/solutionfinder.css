@@ -1,0 +1,359 @@
+﻿.solFinderIndex_BreadcrumbOuterContainer
+{
+    margin-left:90px; 
+    margin-right:90px;
+}
+.solFinderIndex_BreadcrumbInnerContainer
+{
+    padding:0px;  
+    margin-top:40px;
+}
+.solFinderIndex_Separator
+{
+    background-color:#CCCCCC; 
+    padding:0px; 
+    margin-top:10px; 
+    margin-bottom:20px; 
+    height:1px;
+}
+.solFinderIndex_Separator
+{
+    background-color:#CCCCCC; 
+    padding:0px; 
+    margin-top:10px; 
+    margin-bottom:20px; 
+    height:1px;
+}
+.solFinderIndex_TileContainer {
+    /*width:237px;
+    height: 256px;*/
+    width: 237px; 
+    margin: 0 auto;
+    display: inline-table;
+    border: 1px solid #cccccc; 
+    padding:10px;
+    /*margin-left:20px;*/
+    /*margin-top:20px;*/
+    text-align:center;
+    position:relative;
+}
+.solFinderIndex_Icon
+{
+    display: block;
+    margin: auto;
+    /*margin-left:80px;*/
+    /*margin-right: 0px;*/
+    /*margin-top:15px;
+    margin-bottom:15px;*/
+    cursor : pointer;
+    max-width :100%;
+}
+.solFinderIndex_Title
+{
+    display: block;
+    font-size: 14px;
+    color: #9AB91D;
+    text-decoration:underline;
+    text-align:center;
+    margin-top:5px; 
+    margin-bottom:15px; 
+}
+.solFinderIndex_TitleContainer
+{
+   height:18px; 
+   display:inline-table;
+}
+.solFinderIndex_Descr
+{
+    display: block;
+    font-size: 13px;
+    color: #808080;
+    /*margin-top:15px;*/
+}
+
+.solFinderDet_OuterTable
+{
+    width: 100%; 
+    padding: 0px; 
+    border-color: transparent; 
+    position: relative; 
+    overflow: hidden;
+}
+.solFinderDet_BreadcrumbOuter
+{
+    width: 300px; 
+    margin: 0px
+}
+.solFinderDet_TileDescriptor
+{
+	text-align: center;
+    margin-left:10px;
+}
+.solFinderDet_TileDescriptorNoMargin
+{
+    display: block;
+    font-size: 13px;
+    color: #808080;
+    margin-top:15px;
+    text-align: center;
+}
+.solFinderDet_BreadcrumbInnerCell
+{
+    margin: 0px; 
+    padding: 0px;
+}
+.solFinderDet_BreadcrumbInner
+{
+    height: 100%; 
+    width: 100%; 
+    margin: 0px; 
+    padding-top: 20px;
+}
+.solFinderDet_TileColor
+{
+    background-color: white !important
+}
+.solFinderDet_Header
+{
+    color : black;
+    font-size:12px;
+    font-weight:bold;
+    text-align: center;
+}
+.solFinderDet_SmallTileContainer {
+    display:table; 
+    border: 1px solid #cccccc; 
+    margin-top: 15px;
+    padding:10px;
+    min-width: 280px;
+    position:relative;
+}
+.solFinderDet_Navigation
+{
+    margin-top: 10px; 
+    display: inline;
+    font-size: 13px; 
+    color: #9AB91C;
+}
+.solFinderDet_NavigationAnswer
+{
+    margin-top: 10px; 
+    display: inline;
+    font-size: 13px; 
+    color: #CCCCCC;
+    text-decoration:underline;
+}
+.solFinderDet_NullPadding
+{
+    padding: 0px;
+}
+.solFinderDet_Separator
+{
+    border-left: 1px solid #cccccc; 
+    border-top: 1px solid #cccccc; 
+    padding: 10px; 
+    margin-bottom: 10px; 
+    margin-top: 15px; 
+    height: 100%; 
+    width: 100%;
+}
+.solFinderDet_TableBorder
+{
+    border: 0px solid transparent;
+}
+.solFinderDet_InlineTable
+{
+    display: inline; 
+    min-width: 280px;
+}
+.solFinderDet_ContainerTable
+{
+    width: 100%; 
+    /*background-color: white;*/ 
+    padding: 0px; 
+    border-color: transparent; 
+    position: relative; 
+    overflow: hidden;
+}
+.solFinderDet_MainContainer
+{
+    width: 100%; 
+    padding: 0px; 
+    margin: 0px;
+    display: table; 
+    /*background-color: white !important;*/
+}
+.solFinderDet_BreadcrumbOffset
+{
+    width: 300px; 
+    margin: 0px
+}
+.solFinderDet_BreadcrumbPadding
+{
+    margin: 0px; 
+    padding: 0px;
+}
+.solFinderDet_BreadcrumbContainer
+{
+    height: 100%; 
+    width: 100%; 
+    margin: 0px; 
+    padding-top: 20px;
+}
+.solFinderDet_HistoryLayout
+{
+    width: 300px; 
+    margin: 0px
+}
+.solFinderDet_horizSeparator
+{
+    border-left: 1px solid #cccccc; 
+    margin-top: -20px; 
+    margin-bottom: 0px; 
+    width: 1px; 
+    height: 100%; 
+    position: absolute; 
+    overflow: hidden;
+}
+.solFinderDet_ArtContainer
+{
+    margin-top: 0px; 
+    height: 100%; 
+    position:relative;
+}
+.solFinderDet_Close
+{
+    font-size:14px; 
+    font-family: Tahoma Verdana Arial; 
+    color:#9e9e9e; 
+    display:inline; 
+    cursor:pointer; 
+    position:absolute; 
+    top:0px; 
+    left:0px;
+}
+.solFinderIcon
+{
+    display: block;
+    margin: auto;
+    /*margin-left:80px;
+    margin-right: 0px;*/
+    /*margin-top:15px;
+    margin-bottom:15px;*/
+    cursor : pointer;
+    max-width :100%;
+}
+.solFinderIndex_Tile
+{
+	margin-bottom: 40px; 
+word-wrap: break-word; 
+border: 1px solid #cccccc; 
+padding: 15px !important;
+margin-right: 5px; 
+margin-left: 10px; 
+width: 230px !important; 
+}
+.solFinderSmallTileContainer {
+    display:table; 
+    border: 1px solid #cccccc; 
+    margin-top: 15px;
+    padding:10px;
+    min-width: 280px;
+    position:relative;
+}
+.solutioFinderNavigation
+{
+    margin-top: 10px; 
+    display: inline;
+    font-size: 13px; 
+    color: #9AB91C;
+}
+.solutioFinderNavigationAnswer
+{
+    margin-top: 10px; 
+    display: inline;
+    font-size: 13px; 
+    color: #CCCCCC;
+    text-decoration:underline;
+}
+.solFinderOptions
+{
+    font-size: 12px;
+    color: #444444;
+    margin-left:0px;
+    margin-top:0px;
+    display:inline;
+   vertical-align:top;
+}
+.solFinderDet_solFinderOptionsContainerOffset
+{
+    margin-top: 35px;
+}
+.solFinderDet_solutionFinderLink
+{
+    width:100%;
+    color: #808080;
+    display:block;
+        font-size: 13px;
+    margin-top:15px;
+    text-decoration:underline;
+}
+.solFinderDet_solFinderContentOffset
+{
+    margin-left: 10px !important;
+}
+.solFinderDet_solFinderHeader
+{
+    color : black;
+    font-size:12px;
+    font-weight:bold;
+    text-align: center;
+    margin-bottom:15px;
+}
+.solFinderDet_HeaderInbox
+{
+    color : black;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.solFinderDet_OptionsDescr
+{
+    display: block;
+    font-size: 12px;
+    color: #444444;
+    margin-top:15px;
+    margin-bottom:35px;
+}
+   
+.solFinderDet_ButtonActive
+{
+    font-family:'Segoe UI';
+    font-size: 13px; 
+    background-color : #9AB91C;
+    color: white;
+    width: 65px;
+    height:30px;
+    display: inline-table;
+    margin-top:15px;
+    margin-right: 15px;
+    position: relative;
+    text-align:center;
+    padding-top:5px;
+    cursor:pointer;
+}
+.solFinderDet_ButtonDisabled
+{
+    font-family:'Segoe UI';
+    font-size: 13px; 
+    background-color : #808080;
+    color: white;
+    width: 65px;
+    height:30px;
+    display: inline-table;
+    margin-top:15px;
+    margin-right: 15px;
+    position: relative;
+    text-align:center;
+    padding-top:5px;
+}

@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<portal>
+  <common>
+    <SessionTimeOutWarning>Timeout in 1 Minutes.Do you want to reset?</SessionTimeOutWarning>
+    <SessionTimedOut> Your session is timed out.</SessionTimedOut>
+  </common>
+  <login>
+    <title>My Login</title>
+    <instructions>Please enter your information below to access the knowledge base portal.</instructions>
+    <resetPassword>Forgot your one and only password?</resetPassword>
+    <usernameLabel>My Username</usernameLabel>
+    <passwordLabel>My Password</passwordLabel>
+    <loginButtonLabel>My Login</loginButtonLabel>
+    <rememberMe>Remember Me?</rememberMe>
+    <userRequired>The User name field is required</userRequired>
+    <pwdRequired>The Password field is required</pwdRequired>
+    <invalidDetails>Invalid username or password</invalidDetails>
+    <mailSent>The reset password link has been sent to your email address.</mailSent>
+    <loginNewPassword>Please login with your new password.</loginNewPassword>
+  </login>
+  <resetPassword>
+    <title>Reset Password</title>
+    <instructions>A password reset link will be sent to your email address.</instructions>
+    <usernameLabel>Username</usernameLabel>
+    <submitLabel>Submit</submitLabel>
+    <cancelLabel>Cancel</cancelLabel>
+    <invalidDetails>Invalid username</invalidDetails>
+  </resetPassword>
+  <changePassword>
+    <title>Change Password</title>
+    <instructions>Enter your new password below.</instructions>
+    <newLabel>New Password</newLabel>
+    <confirmLabel>Confirm Password</confirmLabel>
+    <submitLabel>Change</submitLabel>
+    <invalidDetails>New Password and Confirm Password do not match</invalidDetails>
+    <minLength>Minimum length of the password needs to be 6 characters</minLength>
+    <fieldsRequired>The New Password and Confirm Password fields are required</fieldsRequired>
+    <failed>Change Password failed.</failed>
+  </changePassword>
+  <home>
+    <title>ABC Company Support</title>
+    <searchWidget_title>How can we help you?</searchWidget_title>
+    <searchWidget_defaultText>Enter Search</searchWidget_defaultText>
+    <attributesWidget_title>My Amazing Products</attributesWidget_title>
+    <categoriesWidget_title>MY Categories</categoriesWidget_title>
+    <articlesFromCategory_1_title>Billing</articlesFromCategory_1_title>
+    <articlesFromCategory_2_title>New Services</articlesFromCategory_2_title>
+    <articlesFromCategory_1_more>More..</articlesFromCategory_1_more>
+    <articlesFromCategory_2_more>More..</articlesFromCategory_2_more>
+    <favorites_title>Favorites</favorites_title>
+    <managemyfavorites>Manage My Favorites</managemyfavorites>
+    <favorites_msg>Your favorite articles will be displayed here. To favorite an article, click on the Favorite icon</favorites_msg>
+    <hotTopics_title>HOT TOPICS</hotTopics_title>
+    <customMessage_1_title>My Custom Message</customMessage_1_title>
+  </home>
+  <search>
+    <title>Search Results</title>
+    <searchResultFor>Search Results For</searchResultFor>
+    <ShowingResultsFor>Showing results for</ShowingResultsFor>
+    <NoResultFound>Sorry, no results were found. Please try a new search.</NoResultFound>
+    <SearchInsteadFor>Search instead for</SearchInsteadFor>
+    <filteryourresults>Filter your results:</filteryourresults>
+    <suggestedSearches>Suggested Searches</suggestedSearches>
+    <filterDisplay_title>Search Filters Applied</filterDisplay_title>
+    <filterDisplay_clearFiltersTitle>Clear All</filterDisplay_clearFiltersTitle>
+    <filterDisplay_contentType_solutionFinder_title>Solution Finder</filterDisplay_contentType_solutionFinder_title>
+    <filterDisplay_contentType_articles_title>Articles</filterDisplay_contentType_articles_title>
+    <filterDisplay_contentType_faqs_title>FAQs</filterDisplay_contentType_faqs_title>
+    <filterDisplay_contentType_glossary_title>Glossary</filterDisplay_contentType_glossary_title>
+    <resultsDisplay_articleID>Article ID:</resultsDisplay_articleID>
+    <resultsDisplay_articleAttributes>Attributes:</resultsDisplay_articleAttributes>
+    <resultsDisplay_articleCategories>Categories:</resultsDisplay_articleCategories>
+    <resultsDisplay_articleContentTypes>ContentTypes:</resultsDisplay_articleContentTypes>
+    <resultsDisplay_articleFormat>Format:</resultsDisplay_articleFormat>
+    <resultsDisplay_dateModified>Modified:</resultsDisplay_dateModified>
+    <resultsDisplay_kbName>KB:</resultsDisplay_kbName>
+    <clearAllfilterType>All</clearAllfilterType>
+    <noFilter>NONE</noFilter>
+    <IgnoreWordMsg>The query contained only ignored words. Please use your back button to search again.</IgnoreWordMsg>
+  </search>
+  <article>
+    <!--
+    Note, the portal automatically displays the article title as the page title, so no selection is made in this file.
+    -->
+    <!-- 
+        Favorite:   Confirmation Label: Verbiage displayed after a user has favorited an article. 
+        -->
+    <!-- 
+            Define the verbiage - Favorite, subscribe, share and edit for article view page.
+            -->
+    <controls_favoriteLabel>Favorite</controls_favoriteLabel>
+    <controls_subscribeLabel>Subscribe</controls_subscribeLabel>
+    <controls_shareLabel>Share</controls_shareLabel>
+    <controls_editLabel>Edit</controls_editLabel>
+
+    <controls_favorite_confirmationLabel>Success - your favorites list has been updated</controls_favorite_confirmationLabel>
+    <controls_favorite_exceeded>You have reached the maximum number of favorites. Please remove an article from your favorite's list before adding any new articles.</controls_favorite_exceeded>
+    <!-- 
+            Define the verbiage for the email form labels and error messages below. All fields required.
+            If enabled but any labels are missing then we will automatically disable the email functionality
+            -->
+    <controls_share_email_title>Email</controls_share_email_title>
+    <controls_share_facebook_title>Facebook</controls_share_facebook_title>
+    <controls_share_twitter_title>Twitter</controls_share_twitter_title>
+    <controls_share_reddit_title>Reddit</controls_share_reddit_title>
+    <controls_share_email_toLabel>To</controls_share_email_toLabel>
+    <controls_share_email_toErrorLabel>Please provide an email address where we should send the article</controls_share_email_toErrorLabel>
+    <controls_share_email_subjectLabel>Subject</controls_share_email_subjectLabel>
+    <controls_share_email_subjectErrorLabel>Please provide a subject</controls_share_email_subjectErrorLabel>
+    <controls_share_email_bodyLabel>Body</controls_share_email_bodyLabel>
+    <controls_share_email_messageLabel>Message</controls_share_email_messageLabel>
+    <controls_share_email_send>Send</controls_share_email_send>
+    <controls_share_email_bodyDefaultMessage>This is a link to a Knowledge Base Article.</controls_share_email_bodyDefaultMessage>
+    <controls_share_email_bodyErrorLabel>Please enter a message in the body</controls_share_email_bodyErrorLabel>
+    <controls_share_email_confirmationLabel>Your email has been sent</controls_share_email_confirmationLabel>
+
+    <articleview_modifieddate>Modified:</articleview_modifieddate>
+    <articleview_categories>Categories</articleview_categories>
+    <articleview_none>None</articleview_none>
+    <articleview_attributes>Attributes</articleview_attributes>
+    <articleview_attachments>Attachments</articleview_attachments>
+    <articleview_relanswers>Related Answers</articleview_relanswers>
+    <articleview_relinks>Related Links</articleview_relinks>
+    <articleview_shareTitle>Share</articleview_shareTitle>
+    <articleview_download1>Click</articleview_download1>
+    <articleview_download2>here</articleview_download2>
+    <articleview_download3>to Download</articleview_download3>
+    <searchResultFor>Search Results For</searchResultFor>
+    <articleview_searchresult>Search Results</articleview_searchresult>
+    
+
+    <!-- 
+        Subscribe:  Allows a user to be notified via email when an article is updated
+                    Enter values for the form labels and error messages below. All fields required.
+                    If enabled but any labels are missing then we will automatically disable the subscribe functionality
+        -->
+
+    <controls_subscribe_instructions>Enter your email address to receive a notification when the article is updated</controls_subscribe_instructions>
+    <controls_subscribe_emailLabel>Email Address</controls_subscribe_emailLabel>
+    <controls_subscribe_subscribeButton>Subscribe</controls_subscribe_subscribeButton>
+    <controls_subscribe_unsubscribeButton>Unsubscribe</controls_subscribe_unsubscribeButton>
+    <controls_subscribe_notSubscribed>You are currently not subscribed to this article</controls_subscribe_notSubscribed>
+    <controls_subscribe_Subscribed>You are currently  subscribed to this article</controls_subscribe_Subscribed>
+    <controls_subscribe_emailErrorLabel>Please provide a valid email address</controls_subscribe_emailErrorLabel>
+    <controls_subscribe_confirmationLabel>Your subscription preferences have been updated</controls_subscribe_confirmationLabel>
+    <!--
+        Feedback:   Allows a user to provide feedback on an article. 
+                    Enter values for the labels and error messages below. 
+                    If enabled but any labels are missing then we will automatically disable the feedback functionality
+        -->
+    <controls_feedback_title>Was this article helpful</controls_feedback_title>
+    <controls_feedback_positiveLabel>Yes</controls_feedback_positiveLabel>
+    <controls_feedback_negativeLabel>No</controls_feedback_negativeLabel>
+    <controls_feedback_confirmationLabel>Thank you for your feedback</controls_feedback_confirmationLabel>
+    <controls_feedback_feedbackForm_title>How can we improve?</controls_feedback_feedbackForm_title>
+    <controls_feedback_feedbackForm_nameLabel>Name</controls_feedback_feedbackForm_nameLabel>
+    <controls_feedback_feedbackForm_nameErrorLabel>Please provide your name</controls_feedback_feedbackForm_nameErrorLabel>
+    <controls_feedback_feedbackForm_emailLabel>Email</controls_feedback_feedbackForm_emailLabel>
+    <controls_feedback_feedbackForm_emailErrorLabel>Please provide a valid email address</controls_feedback_feedbackForm_emailErrorLabel>
+    <controls_feedback_feedbackForm_feedbackLabel>Suggestion</controls_feedback_feedbackForm_feedbackLabel>
+    <controls_feedback_feedbackForm_feedbackErrorLabel>Please provide a suggestion</controls_feedback_feedbackForm_feedbackErrorLabel>
+    <controls_feedback_feedbackForm_submitButtonLabel>Send Feedback</controls_feedback_feedbackForm_submitButtonLabel>
+    <controls_feedback_feedbackForm_cancelButtonLabel>Cancel</controls_feedback_feedbackForm_cancelButtonLabel>
+  </article>
+  <browse>
+    <title>Browse</title>
+    <resultsDisplay_Categories> Categories:</resultsDisplay_Categories>
+    <resultsDisplay_dateModified> Modified:</resultsDisplay_dateModified>
+    <resultsDisplay_articleAttributes>Attributes:</resultsDisplay_articleAttributes>
+    <SearchResultFor>Search result for </SearchResultFor>
+  </browse>
+  <solutionFinder>
+    <title>Solution Finders</title>
+    <titledetails>Solution Finder Details</titledetails>
+    <solutionFinder_1_description>Another Solution Finder</solutionFinder_1_description>
+    <solutionFinder_2_description>My Solution Finder</solutionFinder_2_description>
+    <solutionFinder_SearchResultFor>Search result for</solutionFinder_SearchResultFor>
+    <solutionFinder_Next>NEXT</solutionFinder_Next>
+    <solutionFinder_Previous>PREVIOUS</solutionFinder_Previous>
+    <solutionFinder_Searchresult>Search Results</solutionFinder_Searchresult>
+  </solutionFinder>
+  <favorites>
+    <managemyfavorites>Manage My Favorites</managemyfavorites>
+    <favoriteviewtitle>Title</favoriteviewtitle>
+    <favoriteviewlastviewed>Last Viewed</favoriteviewlastviewed>
+    <favoriteviewtotalviews>Total Views</favoriteviewtotalviews>
+    <favoriteviewaction>Action</favoriteviewaction>
+    <deletefavtitle>Delete Favorite</deletefavtitle>
+    <deletefavmsg>Delete Selected Record ?</deletefavmsg>
+    <delfavbtntxt>Delete</delfavbtntxt>
+    <cancelfavbtntxt>Cancel</cancelfavbtntxt>
+  </favorites>
+</portal>

@@ -1,0 +1,66 @@
+﻿@model ResponsivePortal.Models.CategoryBrowseMainViewModel
+@using ResponsivePortal.Resources
+@using PagedList
+@using PagedList.Mvc
+@using ResponsivePortal.Models
+@using PortalAPI.Models
+@using System.Web.Mvc;
+@using System.Text;
+@using NLog;
+
+@if (Request.IsAuthenticated)
+    {
+@Html.HiddenFor(x => x.SessionTimeOutWarning)
+@Html.HiddenFor(x => x.SessionTimedOut)
+}
+@{
+    ViewBag.Title = @Utilities.GetResourceText(Model.Resources, "TITLE");
+    Layout = "~/Views/shared/_Layout.cshtml";
+}
+<link href="~/Content/Styles/@Model.clientId/@Model.portalId/browse.css" rel="stylesheet" />
+
+@if (Model.showBreadcrumb)
+{
+    <div class="row">
+        <div class=" hide-for-small-only large-12 columns breadcrumbOffset ">
+            @foreach (var item in Model.CategoryBrowseHeaderViewModel.BreadcrumbViewModel.NavigationList)
+            {
+                if (item.Selected)
+                {
+                    <div class="inline breadcrumb">@item.Text</div>
+                }
+                else
+                {
+                    <a href="/@item.Value/Index/@Model.clientId/@Model.portalId?title=@item.Text" class="inline breadcrumb">@item.Text ></a>
+                }
+            }
+
+        </div>
+    </div>
+    <hr class="large-12 columns separator" />
+}
+
+<div class="row">
+    <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4 text-center">
+        @foreach (var item in Model.CategoryBrowseHeaderViewModel.Categories)
+        {
+            <li>
+                <div class="categorywidget-image-size"><a class="medium-header-links" href="/browse/CategoryBrowse/@Model.clientId/@Model.portalId?pcatId=@item.Category.Id&title=@item.Category.Name"><img src="@item.Category.ImageUrl" title="@item.Category.Name" /></a></div><div><a class="medium-header-links" href="/browse/CategoryBrowse/@Model.clientId/@Model.portalId?pcatId=@item.Category.Id&title=@item.Category.Name">@item.Category.Name</a></div>
+                @if (item.Category.Children != null)
+                {
+                    <ul style="list-style-type:none;margin-left:0px;" >
+                        @foreach (var subCat in item.Category.Children)
+                        {
+
+                            <li><a class="normal-links" href="/browse/CategoryBrowse/@Model.clientId/@Model.portalId?catid=@subCat.Id.ToString()&title=@subCat.Name&pcatId=@item.Category.Id&pTitle=@item.Category.Name">@subCat.Name</a> </li>
+
+                        }
+
+                    </ul>
+                }
+            </li>
+        }
+    </ul>
+</div>
+
+

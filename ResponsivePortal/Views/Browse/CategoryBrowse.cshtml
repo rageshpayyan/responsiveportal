@@ -1,0 +1,225 @@
+﻿@model ResponsivePortal.Models.CategoryBrowseMainViewModel
+@using ResponsivePortal.Resources
+@using PagedList
+@using PagedList.Mvc
+@using ResponsivePortal.Models
+@using PortalAPI.Models
+@using System.Web.Mvc;
+@using System.Text;
+
+@{
+    ViewBag.Title = @Utilities.GetResourceText(Model.Resources, "TITLE");
+    Layout = "~/Views/shared/_Layout.cshtml";
+    <script src="~/Content/JS/Browse.js"></script>
+
+}
+
+<link href="~/Content/Styles/@Model.clientId/@Model.portalId/browse.css" rel="stylesheet" />
+<link href="~/Content/CSS/PagedList.css" rel="stylesheet" />
+
+@Html.HiddenFor(x => x.clientId)
+@Html.HiddenFor(x => x.portalId)
+@Html.HiddenFor(x => x.LastcategoryIdSelected)
+@Html.HiddenFor(x => x.ParentcategorySelected)
+@if (Request.IsAuthenticated)
+    {
+@Html.HiddenFor(x => x.SessionTimeOutWarning)
+@Html.HiddenFor(x => x.SessionTimedOut)
+}
+<div class="row" style="padding:10px;">
+    <div class="hide-for-small-only large-12 columns breadcrumbOffset browsecategoryMargin">
+        @foreach (var item in Model.CategoryBrowseHeaderViewModel.BreadcrumbViewModel.NavigationList)
+        {
+            if (item.Selected)
+            {
+                <div class="inline breadcrumb">@item.Text </div>
+            }
+            else if (item.Value == "category")
+            {
+                <a href="/browse/categoryBrowse/@Model.clientId/@Model.portalId?pcatId=@Model.ParentcategorySelected&title=@item.Text" class="inline breadcrumb"> @item.Text></a>
+            }
+            else
+            {
+                <a href="/@item.Value/Index/@Model.clientId/@Model.portalId?title=@item.Text" class="inline breadcrumb">@item.Text > </a>
+            }
+        }
+        <hr class="headerDivider">
+    </div>
+    <p></p>
+    <p></p>
+    <div class=" large-12 columns">
+        <ul class=" small-block-grid-2 medium-block-grid-4 large-block-grid-6 columns text-center browse-header-top-margin">
+            @foreach (var item in Model.CategoryBrowseHeaderViewModel.Categories)
+            {
+                <li>
+                    <div class=" row">
+                        <div class="browse-topbar-image-size">
+                            <a class="categoryTopOffset" href="/browse/categoryBrowse/@Model.clientId/@Model.portalId?pcatId=@item.Category.Id&title=@item.Category.Name">
+                                @{
+                if (@item.Category.Id.ToString() == @Model.ParentcategorySelected.ToString())
+                {
+                    if (!string.IsNullOrEmpty(Path.GetExtension(@item.Category.ImageSelectedUrl)))
+                    {
+                        <img src="@item.Category.ImageSelectedUrl" />
+                    }
+                    else
+                    {
+                        <img src="@item.Category.ImageUrl" />
+                    }
+                }
+                else
+                {
+                    <img src="@item.Category.ImageUrl" />
+                }
+                                }
+                            </a>
+                        </div>
+                    </div>
+                    @if (@item.Category.Id.ToString() == @Model.ParentcategorySelected.ToString())
+                    {
+                        <div class="row ">
+                            <div class="selecteditem-background-color ">
+                                <a class="browse-selecteditem-linkstyle categorytopoffset" href="/browse/categoryBrowse/@Model.clientId/@Model.portalId?pcatId=@item.Category.Id&title=@item.Category.Name">@item.Category.Name</a>
+                            </div>
+                        </div>
+
+                    }
+                    else
+                    {
+                        <a class="medium-header-links" href="/browse/categoryBrowse/@Model.clientId/@Model.portalId?pcatId=@item.Category.Id&title=@item.Category.Name">@item.Category.Name</a>
+                    }
+                </li>
+            }
+        </ul>
+
+        <hr class="headerDivider">
+    </div>
+</div>
+<div class="row">
+    <div class=" large-12 columns">
+        <div id="leftcategoryBrowseWrapper" class="large-3 columns">
+            @if ((Model.AppliedCategories != null && Model.AppliedCategories.Count > 0) || (Model.CategoryBrowseViewModel != null && Model.CategoryBrowseViewModel.Count > 1))
+            {
+                <div class="row catagoryBrowseResult">
+                    <div class="borderContainer">
+                        <div class="medium-headers">
+                            @Utilities.GetResourceText(Model.Resources, "RESULTSDISPLAY_CATEGORIES")
+                        </div>
+                        @if (Model.AppliedCategories != null && Model.AppliedCategories.Count > 0)
+                        {
+                            var count = 1;
+                            var lastItem = Model.AppliedCategories.LastOrDefault();
+                            <div class=" appliedFiltersbox">
+
+                                @foreach (var item in Model.AppliedCategories)
+                                {
+                                    if (count < Model.AppliedCategories.Count)
+                                    {
+                                        <a class="appliedCatagory" href="/Browse/categoryBrowse/@Model.clientId/@Model.portalId?pcatId=@Model.ParentcategorySelected&catId=@item.Id&title=@item.Title&clientId=@Model.clientId&portalId=@Model.portalId&updateFilter=true">  @item.Title </a>
+                                        <div class=" inline"> > </div>
+                                        count++;
+                                    }
+
+                                } @lastItem.Title
+                            </div>
+                        }
+                        @if (Model.CategoryBrowseViewModel != null && Model.CategoryBrowseViewModel.Count > 0)
+                        {
+
+                            foreach (var item in Model.CategoryBrowseViewModel)
+                            {
+                                <ul class="searchFilterLinkStyle topicsContainer">
+                                    <li>
+                                        @if (@item.ChildrenCount > 0)
+                                        { <img src="/content/Images/@Model.clientId/@Model.portalId/arrow_right.png" class="hasChildrenImage" />}<a class="normal-links" href="/Browse/categoryBrowse/@Model.clientId/@Model.portalId?pcatId=@Model.ParentcategorySelected&catId=@item.Id&title=@item.Title">@item.Title</a>
+
+                                    </li>
+                                </ul>
+                            }
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div id="rightCatagoryBrowseWrapper" class="large-9 columns">
+
+            <div id="SearchBoxWrapper" class="row  catSearchBox">
+                <input id="catSearchTextBox" type="text" value="@Model.SearchText" />
+                <input id="catSearchButton" type="image" src="@Model.SearchImageUrl" />
+
+            </div>
+
+            <p></p>
+            <p></p>
+            <div class=" row brwoseSearchResultContainer browseResultListAlignment">
+                @{
+                    List<CatArticleItem> atricles = Model.CategoryBrowseArticleViewModel.CatArticleItem;
+                    var pagenatedList = atricles.ToPagedList(Model.Page, Model.ResultsPerPage);
+
+                    foreach (var item in pagenatedList)
+                    {
+                        <hr>
+                        <div class="row">
+                            <div class="browseArticle">
+                                @{
+                        var filetype = string.Empty;
+                        if (!item.Extension.ToUpper().Contains("HTML") && Model.ResultsDisplay.FileTypeEnabled)
+                        {
+                            filetype = "[" + item.Extension + "]";
+                        }
+
+                        <a class="large-header browseResultListAlignment" href="/Article/index/@Model.clientId/@Model.portalId?id=@item.Id&catId=@Model.ParentcategorySelected">@filetype     @Html.Raw(HttpUtility.HtmlDecode(@item.Title))</a>
+                                }
+
+                            </div>
+                            <p></p>
+                        </div>
+                        if (!string.IsNullOrEmpty(item.Summary))
+                        {
+                            <div class="row">
+                                <div class=" articlesummary inline browseResultListAlignment">@Html.Raw(HttpUtility.HtmlDecode(@item.Summary))</div>
+                            </div>
+                        }
+                        <p></p>
+                        <div class="row browseResultListAlignment ">
+                            @if (Model.ResultsDisplay.DateModifiedEnabled)
+                            {
+                                <div class="inline light-text">@Utilities.GetResourceText(Model.Resources, "RESULTSDISPLAY_DATEMODIFIED")</div>
+                                <div class="inline light-text">@item.ModifiedDate.ToShortDateString()</div>
+                            }
+                            @if (item.KBName != null && item.KBName.Length > 0 && Model.ResultsDisplay.KbNameEnabled)
+                            {
+                                <div class="inline light-text"> | </div>
+                                <div class="inline light-text">@item.KBName</div>
+                            }
+                            @if (item.Id != null && item.Id > 0 && Model.ResultsDisplay.ArticleIdEnabled)
+                            {
+                                <div class="inline light-text"> | </div>
+                                <div class="inline light-text">#@item.Id</div>
+                            }
+                        </div>
+                        <div class="row browseResultListAlignment">
+                            @if (!string.IsNullOrEmpty(item.Attributes) && Model.ResultsDisplay.ArticleAttributesEnabled)
+                            {<div class="inline light-text">@Utilities.GetResourceText(Model.Resources, "RESULTSDISPLAY_ARTICLEATTRIBUTES")  @item.Attributes</div>}
+
+                        </div>
+                    }
+                    <hr>
+                    if (atricles.Count > Model.ResultsPerPage)
+                    {
+                        <div class="pagedList pagination-centered ">
+                            @Html.PagedListPager(pagenatedList, page => Url.Action("/categoryBrowse", new
+               {
+                   page = page,
+                   paging = true,
+                   clientId = @Model.clientId,
+                   portalId = @Model.portalId,
+               }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

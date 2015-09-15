@@ -1,0 +1,199 @@
+﻿
+.browse-home-image-size
+{
+    min-width:100px !important;
+    min-height:100px !important;  
+    display: block;
+    margin: auto;  
+    cursor : pointer;
+    max-width :100%;
+}
+
+.browse-topbar-image-size
+{
+   /* width:150px !important;
+    height:150px !important;*/
+}
+
+hr.headerDivider{
+    margin: auto;
+    width: 100%;   
+}
+.borderContainer{
+    border: none !important;
+}
+.borderContainer .filterRsultsTilte {
+    color: #9AB91C;
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 10px;
+}
+.appliedFiltersbox {
+    color:white;
+    font-size: 11px;
+    font-weight:bold;
+    border: none !important;
+    background-color:#9AB91C;
+    min-height:30px;
+    width:100%;
+    margin-bottom:10px;
+    padding:10px;    
+}
+.borderContainer ul.topicsContainer{
+    margin-left: 13px;
+    margin-bottom: 8px;
+}
+.borderContainer ul.topicsContainer li{
+   list-style: none;
+}
+.borderContainer ul.topicsContainer li a.itemOffset{
+    text-transform: capitalize;
+}
+.clearAll{
+    color:#9AB91C;
+    font-size: 11px;
+    font-weight:bold;
+    margin:1px;
+    text-decoration:underline;
+}
+.browseResultListAlignment
+{
+ padding-left:10px
+}
+.searchFilterLinkStyle
+{
+    font-size:11px;
+    text-decoration:underline;
+    color:black;
+}
+.hasChildrenImage{
+    width:9px;
+    height:9px;
+    display: inline-block;
+    overflow: hidden;
+}
+.row .catSearchBox{
+   /* margin-left: 10px; */
+
+}
+div.row.catSearchBox {
+    background-color: #E2DEE3;
+    height: 65px !important;
+}
+div.row.catSearchBox #catSearchTextBox {
+    margin: 15px 0px 20px 20px;
+    float: left;
+    /*max-width: 82.287%;*/
+    height: 30px;
+    border: none;
+}
+div.row.catSearchBox #catSearchButton {
+    float: left;
+    height: 30px;
+    width :40px;
+    margin: 15px 0px 20px 0px;
+    background-color: #9AB91C;
+    /*width: 12.133%;*/
+    border: none;
+    color: #FFFFFF;
+}
+.browseArticle {
+    color: #808080;
+    font-size: 11px;
+    margin: 1PX;
+}
+
+.browse-item-linkstyle
+{
+    color : #9AB91C !important;    
+    text-decoration:underline !important;  
+    text-align:justify !important;
+}
+
+.selecteditem-background-color
+{
+    margin-top:5px;
+    background-color: #333 !important;
+}
+.browse-selecteditem-linkstyle
+{ 
+    color : #9AB91C !important;             
+    text-align:justify !important;
+}
+.browse-header-top-margin
+{
+  margin-top:15px;
+}
+.row .large-3.columns .row{
+    border: 1px solid #cccccc;
+}
+.row .large-3.columns .row:empty{
+   display: none !important;
+}
+
+.brwoseSearchResultContainer
+{
+    display:grid;
+    border: 0px solid #cccccc; 
+    padding:10px; 
+    width:100%;
+}
+p {
+     margin: 10px;
+}
+.large-9.columns{
+    padding-left: 3em;
+}
+.large-3.columns {
+    margin-bottom: 30px;
+}
+.row .large-3.columns.headerRightStyle.contentTopOffset {
+    margin-left: 0px;
+    padding-left: 0px;
+    color: #cccccc;
+    font-weight: bold;
+    font-size: 0.8em;
+}
+.large-9.columns .row.brwoseSearchResultContainer .large-header{
+    font-family:'Segoe UI Light', 'Segoe UI';
+    font-size: 20px; 
+    color: #9AB91C;
+    margin: 30px 0 10px 0;
+}
+.large-12.columns .row.brwoseSearchResultContainer .large-header {
+font-family: 'Segoe UI Light', 'Segoe UI';
+font-size: 20px;
+color: #9AB91C;
+margin: 30px 0 10px 0;
+}
+.browseCatagoryMargin{
+    margin-top:10px!important;
+    margin-bottom:10px!important;
+}
+.browseCatagoryHeader{
+    min-height: 100px!important; 
+     margin-left: 20px;
+}
+.browseHeaderNoSelectedImage{  
+    background-color: #ff0000; 
+}
+.headerImageWarapper{
+     margin-right:20px;
+}
+.catagoryBrowseResult
+{
+    margin-top:40px!important;
+}
+.appliedCatagory{
+    color:white!important;
+}
+/*end*/
+
+
+
+
+
+

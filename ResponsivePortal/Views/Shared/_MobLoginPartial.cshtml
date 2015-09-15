@@ -1,0 +1,19 @@
+﻿@using Microsoft.AspNet.Identity
+@model ResponsivePortal.Models.HeaderViewModel
+
+@if (Request.IsAuthenticated && Model.portalType != PortalAPI.Models.PortalType.Open)
+{
+    <li class="regularMenuItem" style="color:aliceblue">
+        &nbsp; &nbsp;Singed in as @User.Identity.GetUserName()
+        @if (!Model.isActiveDiretoryUser)
+        {
+            <a href="/Account/LogOff/@Model.clientId/@Model.portalId?clientId=@Model.clientId&portalId=@Model.portalId">Log off</a>
+        }
+    </li>
+}
+else if (Model.portalType != PortalAPI.Models.PortalType.Open)
+{
+    <ul class="nav navbar-nav navbar-right" style="background-color:transparent">
+        @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "regularMenuItem" })
+    </ul>
+}

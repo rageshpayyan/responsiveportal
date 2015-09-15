@@ -1,0 +1,25 @@
+﻿@model ResponsivePortal.Models.ArticleShareViewModel
+
+@{
+    ViewBag.Title = "Share";
+    Layout = null;
+}
+<div class="row" >
+@foreach (var item in Model.ShareLinkList)
+{
+    <div class="article_ShareContainer">
+        <table border="0" class="article_ShareTable">
+            <tr>
+                <td class="article_ShareIconCell">
+                    <img src="@item.Icon" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="article_ShareLink" onclick="javascript: executeMethod({ action: '@item.Id', url: '@item.Link' });">@item.Title</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+</div>

@@ -1,0 +1,26 @@
+﻿@model ResponsivePortal.Models.AttributesViewModel
+
+@{
+    ViewBag.Title = "Attribute";
+    Layout = null;
+}
+<link href="~/Content/Styles/@Model.clientId/@Model.portalId/home.css" rel="stylesheet" />
+
+
+@if (Model.AttributesList != null && Model.AttributesList.Count > 0)
+{
+    <div class="widget-header">@Model.Title</div>
+    <br />
+    <div class="row">
+        <ul class="small-block-grid-2 medium-block-grid-3 large-block-grid-4 text-center">
+            @foreach (var item in Model.AttributesList)
+            {
+                <li>
+                    <div class="attributewidget-image-size"><a class="medium-header-links" href="/Search/GetSearch/@Model.clientId/@Model.portalId?text=*&attributeid=@item.ArticleAttribute.Id&title=@item.ArticleAttribute.Name&fromwidget=true"><img src="@item.ArticleAttribute.ImageUrl" title="@item.ArticleAttribute.Name" /></a></div><div><a class="home-widget-item-links" href="/Search/GetSearch/@Model.clientId/@Model.portalId?text=*&attributeid=@item.ArticleAttribute.Id&title=@item.ArticleAttribute.Name&fromwidget=true">@item.ArticleAttribute.Name</a></div>
+                </li>
+            }
+        </ul>
+    </div>
+    <hr />
+}
+

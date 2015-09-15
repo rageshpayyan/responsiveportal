@@ -1,0 +1,23 @@
+﻿@model ResponsivePortal.Models.HotTopicsViewModel
+
+@{
+    ViewBag.Title = "HotTopics";
+    Layout = null;
+}
+@if (Model.ContentList == null || Model.ContentList.Count == 0)
+{
+    return;
+}
+<div class="row" >
+    <div class="medium-headers contentTopOffset">@Model.Title</div>
+    <div class="borderContainer home_ArticlesContainer">
+        @foreach (var item in Model.ContentList)
+{
+    <ul class=" topicsContainer normal-links  ">
+        <li >
+            <a class="normal-links " style="margin:0px !important" href="/Article/Index/@Model.clientId/@Model.portalId?id=@item.ArticleId">@Html.Raw(HttpUtility.HtmlDecode(@item.Title))</a>
+        </li>
+    </ul>
+}
+    </div>
+</div>

@@ -1,0 +1,361 @@
+﻿/* copied from site.css*/
+
+/* Set width on the form input elements since they're 100% wide by default */
+
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+/*end*/
+
+
+.logoContainer
+{  
+    height:135px; 
+    width: 100%; 
+    background-color:#9AB91C; 
+    position:relative;  
+}
+.logoImage
+{
+    position: absolute; 
+    margin:auto; 
+    top:0px; 
+    left:0px;
+    bottom:0px; 
+    right:0px;
+}
+.selectedMenuItem
+{
+    /*margin-left: 10px;*/ 
+    display: inline;
+    font-size: 13px; 
+    color: #9AB91C !important;
+    font-weight:bold !important;
+}
+
+.regularMenuItem
+{
+    /*margin-left:10px;*/ 
+    display:inline; 
+    font-size:13px; 
+    color:white;
+    background-color:transparent;
+    font-weight:bold !important;
+}
+
+
+.widget-header
+{
+    color : black;
+    font-size:11px;
+    font-weight:bold;
+    margin-bottom: 2px;
+    margin-left:10px;
+}
+.headerRightStyle
+{
+    color : #9AB91C;
+    font-size:11px;
+    font-weight:bold;
+    margin-top:25px; 
+    margin-left:15px; 
+    margin-bottom:10px;
+}
+.textStyle
+{
+    color : #444444;
+    font-size:11px;
+}
+.solutionfinderArticle {
+    color: #808080;
+    font-size: 11px;
+    margin: 1PX;
+}
+.borderContainer
+{
+    display:table; 
+    border: 1px solid #cccccc; 
+    /*padding:10px;*/ 
+    padding-bottom:10px;
+    padding-top:10px;
+    width:100%;
+}
+
+
+.itemsOffset
+{
+    font-size: 12px;
+    margin-left:0px;   
+    margin-top:0px;   
+    color: #9e9e9e;
+}
+.containerTopOffset
+{
+   margin-top: 15px;
+}
+.attrOffset {
+    display:inline-table; margin: 5px;
+    vertical-align:bottom;
+}
+.categoryTopOffset
+{
+   margin-top: 10px;
+}
+.topicsContainer {
+    margin-left: 10px;
+    text-wrap:normal
+}
+
+.inline{
+    display:inline;
+}
+.breadcrumbOffset{
+    margin-top: 40px;
+    margin-left:10px;
+}
+.breadcrumb{
+    font-family:'Segoe UI';
+    color : #cccccc;
+    font-size:13px;    
+}
+.articlesInfo{
+    font-family:'Segoe UI';
+    color : #9e9e9e;
+    font-size:14px;
+    margin-left:15px;
+}
+.articlesTitles{
+    font-family:'Segoe UI';
+    font-size: 11px; 
+    color: black;
+    font-weight : bold;
+}
+.articlesLinkLists{
+    font-family:'Segoe UI';
+    color : #9e9e9e;
+    font-size:13px;
+}
+
+.articlesLinks{
+    font-family:'Segoe UI';
+    font-size: 14px; 
+    color: #808080;
+    text-decoration: underline;
+}
+.articlesLinksBackground{
+    background-color: #cccccc;
+    padding-top : 15px;
+    padding-bottom : 15px;
+    margin-left : 10px;
+}
+.articlesButton
+{
+    font-family:'Segoe UI';
+    font-size: 15px; 
+    background-color : #9AB91C;
+    color: white;
+    min-width: 65px;
+    width:auto;
+    height:30px;
+    display: inline-table;
+    margin-left: 15px;
+    position: relative;
+    text-align:center;
+    padding-top:5px;
+}
+.displayNone
+{
+    display:none;
+}
+
+p {
+     margin: 10px;
+}
+
+.confirmLabel
+{
+    font-family:'Segoe UI';
+    font-size: 15px; 
+    font-weight: bold;
+    border-radius: 5px;
+    background-color : #9AB91C;
+    color: white;
+    display: inline-block;
+    position: relative;
+    padding-top: 2px;
+    text-align:center;
+    width: 250px;
+    height: 20px;
+}
+.sendFeedbackHeader
+{
+    margin-bottom: 20px; 
+    font-family: Segoe UI; 
+    font-size: 15px; 
+    font-weight: bold;
+}
+
+.contentTopOffset
+{
+   margin-top: 65px;
+}
+
+
+.layoutOffset
+{
+    width: 100%; height: 10px;
+}
+.footerBackground
+{
+    background-color:gray; 
+    width:100%;
+}
+.fullWidthTable
+{
+    border: 0px solid transparent; width:100%; margin:0px;
+}
+.fullWidth {
+    width: 100%;
+}
+.headerBackground
+{
+    width: 100%; 
+    background-color: #333;
+}
+.separator
+{
+    background-color:#CCCCCC; 
+    padding:0px;     
+    margin-top:10px;
+    margin-left:10px !important;
+    margin-bottom:20px; 
+    height:1px;
+}
+/* eg. Buttons on article page.*/
+.kbbutton {
+        border-style: solid;
+        border-width: 0px;
+        cursor: pointer;
+        font-family:'Segoe UI Light', 'Segoe UI';
+        font-weight: normal;
+        line-height: normal;        
+        position: relative;
+        text-decoration: none;
+        text-align: center;
+        display: inline-block;        
+        font-size: 1rem;
+        background-color: #9AB91C;
+        border-color: #007095;
+        color: white!important;
+        border: none;
+        font-weight: bold !important; 
+        padding:5px;
+   	    min-width: 65px;
+        width:auto;
+	    height:30px;	
+    }
+
+/* eg. links for sub-catagory links on home page, search and catagory browse page, or Hot toics on home page*/
+.normal-links 
+{
+   color: #9e9e9e; 
+    font-size: 12px; 
+    text-decoration:underline; 
+    cursor:pointer;     
+    font-family: 'Segoe UI'; 
+    margin:5px;
+}
+/* eg. header for Search Filters, Hot Topics...*/
+.medium-headers
+{
+    color: #9AB91C; 
+    font-size: 11px; 
+    font-weight: bold; 
+    font-family: 'Helvetica';
+    padding:10px;
+}
+/* eg. Search Suggestion links or Home page Attribute links */
+.medium-header-links
+{
+    color: #9AB91C; 
+    font-size: 13px; 
+    text-decoration:underline; 
+    cursor:pointer; 
+    font-family: 'Segoe UI'; 
+    margin-left:10px;
+}
+/* eg. "Filter your Results on search page*/
+.highlight-header
+{
+    color: black; 
+    font-size: 13px; 
+    font-weight: bold; 
+    font-family: 'Segoe UI'; 
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+/* eg Article title on search or browse page*/
+.large-header
+{
+    color: #9ab91c; 
+    font-size: 20px; 
+    font-family: 'Segoe UI Light', 'Segoe UI';
+}
+.dark-text
+{
+    color: #696969; 
+    font-size: 12px; 
+    font-family: 'Segoe UI';
+}
+/* eg. Article Metadata like Modified*/
+.light-text
+{
+    color: #a9a9a9; 
+    font-size: 12px; 
+    font-family: 'Segoe UI';
+}
+
+.tile-container {
+    display: inline-table;
+    border: 1px solid #cccccc; 
+    padding:10px;
+    margin-left:20px;
+    margin-top:20px;
+    position:relative;
+}
+/* Article summary on search and browse page.*/
+.articlesummary
+{
+    font-family:'Segoe UI';
+    color :black!important;
+    font-size:12px!important;
+}

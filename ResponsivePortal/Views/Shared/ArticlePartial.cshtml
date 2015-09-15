@@ -1,0 +1,208 @@
+﻿@model ResponsivePortal.Models.ArticlePartialViewModel
+@using ResponsivePortal.Resources
+@using ResponsivePortal
+@{
+    ViewBag.Title = @Html.Raw(HttpUtility.HtmlDecode(Model.ArticleItem.Title));
+}
+
+<link href="~/Content/Styles/@Model.clientId/@Model.portalId/article.css" rel="stylesheet" />
+
+<div class="row article_InfoOffset" >
+    <div class="large-8 columns">
+        <div class="article_Title">@Html.Raw(HttpUtility.HtmlDecode(Model.ArticleItem.Title))</div>
+        <div class="articlesInfo article_InfoOffset">
+            @if (Model.ArticleConfiguration.articleDisplayProperties.ModifiedDateDisplay)
+            {
+                <div class="inline">@Utilities.GetResourceText(Model.Resources, "ARTICLEVIEW_MODIFIEDDATE")</div>
+                if (Model.ArticleConfiguration.articleDisplayProperties.ModifiedDateFormat == "DDMMYYYY")
+                {
+                    <div class="inline">@Model.ArticleItem.ModifiedDate.ToString("dd/MM/yyyy")</div>
+                }
+                else
+                {
+                    <div class="inline">@Model.ArticleItem.ModifiedDate.ToString("MM/dd/yyyy")</div>
+                }
+            }
+            @if (Model.ArticleConfiguration.articleDisplayProperties.KbNameDisplay)
+            {
+                <div class="inline">|</div>
+                <div class="inline">@Model.ArticleItem.KnowledgeBase.Name</div>
+
+            }
+            @if (Model.ArticleConfiguration.articleDisplayProperties.ArticleIDDisplay)
+            {
+                <div class="inline">|</div>
+                <div class="inline">#@Model.ArticleItem.ArticleId</div>
+            }
+
+        </div>
+        @if (Model.ArticleConfiguration.articleDisplayProperties.CategoriesDisplay)
+{
+    <div class="articlesInfo article_InfoOffset">
+        @if (Model.Categories != null)
+        {
+            <div class="inline ">@Utilities.GetResourceText(Model.Resources, "ARTICLEVIEW_CATEGORIES")</div>
+            if (Model.Categories.Count > 0)
+            {
+                int catcount = 0;
+                foreach (var category in Model.Categories)
+                {
+                    catcount = catcount + 1;
+                    var count = category.NavigationList.Count;
+                    var index = 0;
+                    <div class="inline">
+                        @foreach (var item in category.NavigationList)
+                        {
+                            <div class="inline articlesLinkLists">@item.Text</div>
+                            index++;
+                            if (index < count)
+                            {
+                                <div class="inline articlesLinkLists">></div>
+                            }
+                        }
+                    </div>
+                    if (catcount != Model.Categories.Count)
+                    { <div class="inline articlesLinkLists">|</div> }
+
+                }
+            }
+            else
+            {
+                <div class="inline articlesLinkLists">@Utilities.GetResourceText(Model.Resources, "ARTICLEVIEW_NONE")</div>
+            }
+        }
+    </div>
+}
+        @if (Model.ArticleConfiguration.articleDisplayProperties.AttributesDisplay)
+{
+    <div class="articlesInfo article_InfoOffset">
+
+        @if (Model.Attributes != null)
+        {
+            <div class="inline ">@Utilities.GetResourceText(Model.Resources, "ARTICLEVIEW_ATTRIBUTES")</div>
+            if (Model.Attributes.Count > 0)
+            {
+                int attcount = 0;
+                foreach (var attribute in Model.Attributes)
+                {
+                    attcount = attcount + 1;
+                    var count = attribute.NavigationList.Count;
+                    var index = 0;
+                    <div class="inline">
+                        @foreach (var item in attribute.NavigationList)
+                        {
+                            <div class="inline articlesLinkLists">@item.Text</div>
+                            index++;
+                            if (index < count)
+                            {
+                                <div class="inline articlesLinkLists">></div>
+                            }
+                        }
+                    </div>
+                    if (attcount != Model.Attributes.Count)
+                    { <div class="inline articlesLinkLists">|</div>}
+
+                }
+            }
+            else
+            {
+                <div class="inline articlesLinkLists">@Utilities.GetResourceText(Model.Resources, "ARTICLEVIEW_NONE")</div>
+            }
+        }
+    </div>
+}
+    </div>
+    <div class="large-4 columns article_actionAlertPanel"  >
+        <form id="SubscribeForm"></form>
+        <div id="divActionAlert" class='article_actionAlert'></div>
+        @foreach (var item in Model.ImageLinks)
+        {
+            <a id="options-@item.Id" onclick="javascript:executeMethod({ action: '@item.Id', url: '@item.Link' });" >
+                <img id="imgNormal-@item.Id" class="inline" src="@item.Icon" title="@item.Title" />
+                <img id="imgToggle-@item.Id" class="inline displayNone" src="@item.ToggleIcon" title="@item.Title" />
+            </a>
+        }
+    </div>
+</div>
+<hr class="large-12 columns separator"></hr>
+<div class="row ">
+    <div class="large-12 columns article_Content" style="position:relative;">
+        <table border="0" class="fullWidthTable" style="margin-left:15px;">
+            <tr>
+                @if (Model.ArticleItem.Extension == ".html" && Model.ArticleItem.DisplayFormat != 1)
+                {
+                    <td id="tdArtContainer" valign="top" class="fullWidth">
+                        <div>@Html.Raw(HttpUtility.HtmlDecode(Model.ArticleItem.Content.BodyContent))</div>
+                    </td>
+                }
+                else if (Model.ArticleItem.Extension == ".html" && Model.ArticleItem.DisplayFormat == 1)
+                {
+                    <td id="tdArtContainer" valign="top" class="fullWidth">
+                        <div><iframe id="frameArticle" srcdoc="@Model.ArticleItem.Content.CompleteContent" style="border:none;" height="700" width="900"></iframe></div>
+                    </td>
+                }
+                else
+                {
+                    <td id="tdArtContainer" valign="top" class="fullWidth">
+                        <div>@Utilities.GetResourceText(Model.Resources, "ARTICLEVIEW_DOWNLOAD1")<a href="/Article/Download/@Model.clientId/@Model.portalId?articleid=@Model.ArticleItem.ArticleId" title=@Model.ArticleItem.Title> <u><b>@Utilities.GetResourceText(Model.Resources, "ARTICLEVIEW_DOWNLOAD2")</b></u></a> @Utilities.GetResourceText(Model.Resources, "ARTICLEVIEW_DOWNLOAD3")</div>
+                    </td>
+                }
+                
+            </tr>
+        </table>
+        <div id="alertDetailsContainer" class="displayNone article_SocialPopup article_SocialRight">
+            <div id="ShareContainer" class="displayNone">
+                <div class="article_SocialHeader">@Utilities.GetResourceText(Model.Resources, "ARTICLEVIEW_SHARETITLE")</div>
+                @{Html.RenderPartial("Share", Model.ShareItem);}
+            </div>
+            <div id="SubscribeContainer" class="displayNone">
+                <div class="article_SocialHeader">@Utilities.GetResourceText(Model.Resources, "CONTROLS_SUBSCRIBELABEL")</div>
+                @{Html.RenderPartial("Subscribe", Model);}
+            </div>
+            <div id="ShareMailContainer" class="displayNone">
+                <div class="article_SocialHeader">@Utilities.GetResourceText(Model.Resources, "ARTICLEVIEW_SHARETITLE")</div>
+                @{Html.RenderPartial("ShareMail");}
+            </div>
+
+        </div>
+    </div>
+</div>
+@if (Model.Attachments != null && Model.Attachments.Count > 0)
+{
+    <hr class="large-12 columns separator" />
+    <div class="row article_InfoOffset" style="margin-left:10px;">
+        <div class="large-6 columns">
+            <div class="articlesTitles">@Utilities.GetResourceText(Model.Resources, "ARTICLEVIEW_ATTACHMENTS")</div>
+            @foreach (var item in Model.Attachments)
+            {
+                <ul class="linkRightStyle topicsContainer">
+                    <li>
+                        <a class="linkRightStyle" href="/Article/Attachment/@Model.clientId/@Model.portalId?filename=@item.Name&extension=@item.FileExtention&attachmentid=@item.Id">@item.Name</a>
+                    </li>
+                </ul>
+            }
+        </div>
+    </div>
+}
+@Html.HiddenFor(x => x.clientId)
+@Html.HiddenFor(x => x.portalId)
+@Html.HiddenFor(x => x.ArticleItem.ArticleId, new { id = "articleId" })
+@Html.HiddenFor(x => x.Resources["CONTROLS_FEEDBACK_FEEDBACKFORM_NAMEERRORLABEL"], new { id = "nameTitle" })
+@Html.HiddenFor(x => x.Resources["CONTROLS_FEEDBACK_FEEDBACKFORM_EMAILERRORLABEL"], new { id = "emailTitle" })
+@Html.HiddenFor(x => x.Resources["CONTROLS_FEEDBACK_FEEDBACKFORM_FEEDBACKERRORLABEL"], new { id = "suggestionTitle" })
+@Html.HiddenFor(x => x.Resources["CONTROLS_SHARE_EMAIL_TOERRORLABEL"], new { id = "ShareEmailTitle" })
+@Html.HiddenFor(x => x.Resources["CONTROLS_SHARE_EMAIL_SUBJECTERRORLABEL"], new { id = "ShareSubjectTitle" })
+@Html.HiddenFor(x => x.Resources["CONTROLS_SHARE_EMAIL_BODYERRORLABEL"], new { id = "ShareBodyTitle" })
+
+
+
+<script src="@Url.Content("~/Content/JS/article.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+            var iframe = $('#frameArticle')[0];
+            if (iframe) {
+                srcDoc.set(frameArticle);
+            }
+    });
+</script>

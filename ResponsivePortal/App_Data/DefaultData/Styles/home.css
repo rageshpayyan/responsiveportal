@@ -1,0 +1,75 @@
+﻿.categorywidget-image-size {
+    /* width:150px !important;
+    height:150px !important; */
+}
+.categorywidget-subcategory-links
+{
+    color:#939393 !important;    
+    text-decoration:underline !important;   
+}
+
+.home-widget-item-links
+{
+    color : #9AB91C !important;    
+    text-decoration:underline !important;  
+}
+
+.home_TopLinkStyle
+{
+    color : #9AB91C;
+    font-size:12px;
+    text-decoration:underline;
+}
+.home_ListLinkStyle
+{
+    color : #939393;
+    font-size:11px;
+    text-decoration:underline;
+}
+
+.home_SearchTitle
+{
+    font-family:'Segoe UI Light', 'Segoe UI';
+    color : #868686;
+    font-size:36px;
+    text-align:center;
+	display: table; 
+    margin: 0 auto;
+}
+
+
+
+.home_ArticlesContainer
+{
+	padding: 20px;
+}
+.home_customTitle {
+        margin-bottom: 15px;
+        margin-left: 10px;
+    }
+.home_hotTopicOffset {
+    margin-top:-5px;
+    padding:0;
+    }
+
+/*  Search Box Style*/
+div.row.searchBox {
+    height: 40px !important;
+    margin-left:auto!important;
+}
+
+div.row.searchBox #homeSearchTextBox {
+    margin: 15px 0px 20px 0px;
+    float: left;
+    height: 40px;
+    
+}
+div.row.searchBox #homeSearchButton {
+    float: left;
+    height: 40px;
+    width :40px;
+    margin: 15px 0px 20px 0px;
+    background-color: #9AB91C;      
+    color: #FFFFFF;
+}
+/*end*/

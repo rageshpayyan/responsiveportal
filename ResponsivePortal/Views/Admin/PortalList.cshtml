@@ -1,0 +1,92 @@
+﻿@model ResponsivePortal.Models.PortalViewModel
+@using ResponsivePortal.Resources
+@{
+    ViewBag.Title = "Portal Administration";
+ Layout = "~/Views/shared/_AdminLayout.cshtml";
+}
+<link rel="stylesheet" href="~/Content/CSS/Admin.css">
+
+<div class="row">&nbsp;</div>
+<div class="row">
+    <table class="edittable">
+        <tr>
+            <td><img width="250" src="~/Images/moxielogo.jpg" /></td>
+            <td style="text-align:right"><a class="editheader" href="http://help.moxiesoft.com/docs/kb/9.4" target="_blank"><b>@AdminResources.Help</b></a></td>
+            <td><b><a class="editheader" href="/Admin/Logout">@AdminResources.Logout</a></b></td>
+        </tr>
+        <tr>
+            <td colspan="3" class="edituser">@AdminResources.LoggedUser @ViewBag.UserName </td>
+        </tr>
+    </table>
+</div>
+
+@using (Html.BeginForm("PortalList", "Admin", new { clientId = ViewBag.ClientId }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="row" >
+        <div class="column">
+            <h4 class="edit-largefont">@AdminResources.PortalAdministration</h4>
+
+            @if (Model.PortalPS4ViewModel.Count != 0)
+            {
+                <h4 class="edit-smallfont">@AdminResources.SelectPortal</h4>
+            }
+            else
+            {
+                <h4 class="edit-smallfont"> @AdminResources.CreatePortal</h4>
+            }
+        </div>
+        </div>
+    <div class="row">
+        <div class="column">
+            @if (Model.PortalPS4ViewModel.Count != 0)
+            {
+                <select name="listbox" id="pid" class="edit-smallfont">
+                    @foreach (var item in Model.PortalPS4ViewModel)
+                    {
+                        <option value=@item.PortalId>
+                            @item.PortalName
+                        </option>
+                    }
+                </select>
+                <div class="column">&nbsp;</div>
+                <input type="submit" value="Add Portal" />
+            }
+            @if (Model.PortalPS5ViewModel.Count != 0)
+            {
+                <div>&nbsp;</div>
+                <h4 class="portal-listmessage">@AdminResources.ListPortal</h4>
+                <div class="row">
+                    <div class="column">
+                        <table class="large-12" style="border-color:#d5d1d1">
+                            <tr class="portal-headers">
+                                <td class="portal-rows large-1">@AdminResources.PortalId</td>
+                                <td class="portal-rows large-3">@AdminResources.PortalName</td>
+                                <td class="portal-rows large-6">@AdminResources.Description</td>
+                                <td class="portal-rows large-1">@AdminResources.Edit</td>
+                                <td class="portal-rows large-1">@AdminResources.View</td>
+                            </tr>
+                            @foreach (var item in Model.PortalPS5ViewModel)
+                            {
+                                <tr>
+                                    <td class="edit-smallfont">@Html.DisplayFor(m => item.PortalId)</td>
+                                    <td class="edit-smallfont">@Html.DisplayFor(m => item.PortalName)</td>
+                                    <td class="edit-smallfont">@Html.DisplayFor(m => item.PortalDesc)</td>
+                                    <td class="edit-smallfont"><a href="/Admin/Edit/@item.ClientId/@item.PortalId">@AdminResources.Edit</a></td>
+                                    @if (@item.IsConfigured == 1)
+                                    {
+                                        <td class="edit-smallfont"><a href="/Home/Index/@item.ClientId/@item.PortalId" target="_target">@AdminResources.View</a></td> }
+                                    else
+                                    {
+                                        <td style="width:10px"></td>
+                                    }
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+}

@@ -1,0 +1,43 @@
+﻿@model ResponsivePortal.Models.HomeViewModel
+
+@{
+    ViewBag.Title = @Utilities.GetResourceText(Model.Resources,"TITLE");
+    Layout = "~/Views/shared/_Layout.cshtml";
+}
+@if (Request.IsAuthenticated)
+    {
+@Html.HiddenFor(x => x.SessionTimeOutWarning)
+@Html.HiddenFor(x => x.SessionTimedOut)
+}
+
+<script src="@Url.Content("~/Content/themes/JqGrid/jquery-ui-1.10.3.min.js")" type="text/javascript"></script>
+<link href="~/Content/Styles/@Model.clientId/@Model.portalId/home.css" rel="stylesheet" />
+<link href="~/Content/CSS/jquery-ui.css" rel="stylesheet" />
+<div class="row home_ArticlesContainer">
+    <div class="large-8 columns">
+        <p />
+        @if (Model.SearchViewModel.DisplaySearch)
+        {
+            Html.RenderPartial("Widgets\\Search", Model.SearchViewModel);
+            <hr />
+        }
+        @foreach (var item in Model.CustomMessageViewModelList)
+        {
+            Html.RenderPartial("Widgets\\CustomMessage", item);
+            <hr />
+        }
+        @{Html.RenderPartial("Widgets\\Attributes", Model.AttributesViewModel);}
+      
+        @{Html.RenderPartial("Widgets\\Categories", Model.CategoriesViewModel);}
+    </div>
+    <div class="large-4 columns">
+        @{Html.RenderPartial("Widgets\\HotTopics", Model.HotTopicsViewModel);}
+
+        @{Html.RenderPartial("Widgets\\Favorites", Model.FavoritesViewModel);}
+
+        @foreach (var item in Model.ArticlesFromCategoryViewModelList)
+        {
+            Html.RenderPartial("Widgets\\ArticlesFromCategoryTitle", item);
+        }
+    </div>
+</div>

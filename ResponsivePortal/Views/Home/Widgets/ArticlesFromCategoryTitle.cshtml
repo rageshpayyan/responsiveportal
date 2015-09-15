@@ -1,0 +1,38 @@
+﻿@model ResponsivePortal.Models.ArticlesFromCategoryViewModel
+
+@{
+    ViewBag.Title = "Articles";
+    Layout = null;
+}
+@if (Model.ContentList.ArticleBase == null || Model.ContentList.ArticleBase.Count == 0)
+{
+    return;
+}
+<div class="row">
+    <div class="medium-headers contentTopOffset">@Model.Title</div>
+    <div class="borderContainer home_ArticlesContainer">
+        @if (Model.ContentList != null)
+        {
+            foreach (var item in Model.ContentList.ArticleBase)
+            {
+                <ul class="normal-links topicsContainer">
+                    <li>
+                        <a class="normal-links" href="/Article/Index/@Model.clientId/@Model.portalId?id=@item.Id">@Html.Raw(HttpUtility.HtmlDecode(@item.Title))</a>
+                    </li>
+                </ul>
+            }
+        }
+        @if (Model.ContentList.isMoreArticleLink)
+        {
+            if (Model.BrowseEnabled)
+            {
+                <div style="text-align:right"><u><a class="medium-headers contentTopOffset" href="/browse/CategoryBrowse/@Model.clientId/@Model.portalId?pcatId=@Model.CategoryId&title=@Model.CategoryName">@Model.MoreText</a></u></div>
+            }
+            else
+            {
+                <div style="text-align:right"><u><a class="medium-headers contentTopOffset" href="/search/getsearch/@Model.clientId/@Model.portalId?text=*&catid=@Model.CategoryId">@Model.MoreText</a></u></div>
+            }
+        }
+
+    </div>
+</div>

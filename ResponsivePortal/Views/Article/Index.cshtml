@@ -1,0 +1,174 @@
+﻿@model ResponsivePortal.Models.ArticleViewModel
+@using ResponsivePortal.Resources
+@using ResponsivePortal.Models
+@using ResponsivePortal
+
+@if (Request.IsAuthenticated)
+{
+    @Html.HiddenFor(x => x.SessionTimeOutWarning)
+    @Html.HiddenFor(x => x.SessionTimedOut)
+}
+@{
+    if (Model == null)
+    {
+        if (@ViewData["ArticleNotFound"] != null)
+        {
+            <p class="article_IndexNotFound"> @Html.Raw(HttpUtility.HtmlDecode((string)@ViewData["ArticleNotFound"]))</p>
+        }
+        return;
+    }
+    ViewBag.Title = Model.ArticlePartialViewModel.ArticleItem.Title;
+    Layout = "~/Views/shared/_Layout.cshtml";
+}
+
+@section head
+{
+    @Html.Raw(HttpUtility.HtmlDecode(@Model.ArticlePartialViewModel.ArticleItem.Content.HeaderContent))
+}
+@section AfterHeaderBeforeBodyContent
+{
+    @Html.Raw(HttpUtility.HtmlDecode(@Model.ArticlePartialViewModel.ArticleItem.Content.AfterHeaderBeforeBodyContent))
+}
+
+@section AfterBodyContent
+{
+    @Html.Raw(HttpUtility.HtmlDecode(@Model.ArticlePartialViewModel.ArticleItem.Content.AfterBodyContent))
+}
+
+
+@if (Model.showBreadcrumb)
+{
+    <div class="row">
+        <div class=" hide-for-small-only large-12 columns breadcrumbOffset">
+            @foreach (var item in Model.BreadcrumbViewModel.NavigationList)
+            {
+                if (item.Selected)
+                {
+                    <div class="inline breadcrumb">@Html.Raw(HttpUtility.HtmlDecode(@item.Text))</div>
+                }
+                else if (item.Value == "Search")
+                {
+                    if (!string.IsNullOrEmpty(item.Text))
+                    {
+                        var fromw = "false";
+                        if (@Model.FromWidget)
+                        {
+                            fromw = "true";
+                            <a href="/@item.Value/GetSearch/@Model.clientId/@Model.portalId?text=@item.Text&searchFrom=@SearchFrom.ArticlePage&fromwidget=@fromw" class="inline breadcrumb">@Utilities.GetResourceText(Model.Resources, "ARTICLEVIEW_SEARCHRESULT") > </a>
+                        }
+                        else
+                        {
+                            <a href="/@item.Value/GetSearch/@Model.clientId/@Model.portalId?text=@item.Text&searchFrom=@SearchFrom.ArticlePage" class="inline breadcrumb">@Utilities.GetResourceText(Model.Resources, "SEARCHRESULTFOR") @item.Text > </a>
+                        }
+
+                    }
+                }
+                else if (item.Value == "Browse")
+                {
+
+                    <a href="/@item.Value/categoryBrowse/@Model.clientId/@Model.portalId?pcatId=@Int32.Parse(item.Text)" class="inline breadcrumb">@item.Value > </a>
+
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(item.Value))
+                    {
+                        if (!string.IsNullOrEmpty(@Model.RelativeArtilceParentId.ToString()))
+                        {
+                            <a href="/@item.Value/Index/@Model.clientId/@Model.portalId?title=@item.Text&id=@Model.RelativeArtilceParentId&searchText=@Model.SearchText&searchFrom=@SearchFrom.ArticlePage" class="inline breadcrumb">@item.Text > </a>   
+                        }
+                        else
+                        {
+                            <a href="/@item.Value/Index/@Model.clientId/@Model.portalId?title=@item.Text" class="inline breadcrumb">@item.Text > </a>
+                        }
+                    }
+                }
+            }
+        </div>
+    </div>
+    <hr class="large-12 columns separator"></hr>
+}
+
+@{Html.RenderPartial("..\\Shared\\ArticlePartial", Model.ArticlePartialViewModel);}
+<hr class="separator"></hr>
+<div class="row articlesInfoOffset">
+
+    <div class="large-3 columns"></div>
+    @if (Model.ArticlePartialViewModel.ArticleConfiguration.articleControlsProperties.ArticleFeedbackDisplay)
+    {
+        <div class=" small-12 columns medium-5 columns large-5 columns" id="divFeedback">
+            <div id="divFeedbackOptions" class="floatRight">
+                <div class="inline articlesContent">@Utilities.GetResourceText(Model.Resources, "CONTROLS_FEEDBACK_TITLE")</div>
+                <div class="inline articlesButton"><a class="inline articlesButton article_IndexButtonOffset" onclick="javascript: executeMethod({ action: 'feed', rate: true });">@Utilities.GetResourceText(Model.Resources, "CONTROLS_FEEDBACK_POSITIVELABEL")</a></div>
+                <div class="inline articlesButton"><a class="inline articlesButton article_IndexButtonOffset" onclick="javascript: executeMethod({ action: 'feed', rate: false });">@Utilities.GetResourceText(Model.Resources, "CONTROLS_FEEDBACK_NEGATIVELABEL")</a></div>
+            </div>
+            <div id="divFeedbackSuccess" class="inline confirmLabel article_IndexFeedMessage">
+                @Utilities.GetResourceText(Model.Resources, "CONTROLS_FEEDBACK_CONFIRMATIONLABEL")
+            </div>
+            @if (Model.ArticlePartialViewModel.ArticleConfiguration.articleControlsProperties.ArticleFeedbackFormDisplay)
+            {
+                <div id="divFeedbackForm" class="article_IndexFeedForm">
+                    <div class="sendFeedbackHeader">@Utilities.GetResourceText(Model.Resources, "CONTROLS_FEEDBACK_FEEDBACKFORM_TITLE")</div>
+                    <div>@Html.Label(@Utilities.GetResourceText(Model.Resources, "CONTROLS_FEEDBACK_FEEDBACKFORM_NAMELABEL"))</div>
+                    <div>@Html.TextBox("txtName", "", new { id = "txtName", @class = "article_IndexFeedText" })</div>
+                    <div class="validation-error"></div>
+                    <div>@Html.Label(@Utilities.GetResourceText(Model.Resources, "CONTROLS_FEEDBACK_FEEDBACKFORM_EMAILLABEL"))</div>
+                    <div>@Html.TextBox("txtEmail", "", new { id = "txtEmail", @class = "article_IndexFeedText" })</div>
+                    <div class="validation-error"></div>
+                    <div>@Html.Label(@Utilities.GetResourceText(Model.Resources, "CONTROLS_FEEDBACK_FEEDBACKFORM_FEEDBACKLABEL"))</div>
+                    <div>@Html.TextArea("txtSuggestion", new { id = "txtSuggestion", cols = "50", rows = "20", maxlength = "249", @class = "article_FeedSuggest" })</div>
+                    <div class="validation-error"></div>
+                    <div class="row">
+                        <a class="inline articlesButton article_IndexFeedButton" onclick="javascript: executeMethod({ action: 'feedsubmit' });">@Utilities.GetResourceText(Model.Resources, "CONTROLS_FEEDBACK_FEEDBACKFORM_SUBMITBUTTONLABEL")</a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+@if ((Model.RelAnsweres != null && Model.RelAnsweres.Count > 0) || (Model.RelLinks != null && Model.RelLinks.Count > 0))
+{
+    <hr class="large-12 columns separator"></hr>
+    <br />
+    <div class="row articlesLinksBackground" style="margin-left:10px;">
+        @if (Model.RelAnsweres.Count > 0)
+        {
+            <div class="large-8 columns">
+                <div class="articlesTitles">@Utilities.GetResourceText(Model.Resources, "ARTICLEVIEW_RELANSWERS")</div>
+                @foreach (var item in Model.RelAnsweres)
+                {
+                    <ul class="linkRightStyle topicsContainer">
+                        <li>
+                            <a class="linkRightStyle" href="/Article/Index/@Model.clientId/@Model.portalId?relparticId=@Model.ArticlePartialViewModel.ArticleItem.ArticleId&relpname=@HttpUtility.HtmlDecode(@Model.ArticlePartialViewModel.ArticleItem.Title)&id=@item.Id">@HttpUtility.HtmlDecode(@item.Name)</a>
+                        </li>
+                    </ul>
+                }
+            </div>
+        }
+
+        @if (Model.RelLinks.Count > 0)
+        {
+            <div class="large-4 columns">
+                <div class="articlesTitles">@Utilities.GetResourceText(Model.Resources, "ARTICLEVIEW_RELINKS")</div>
+                @foreach (var item in Model.RelLinks)
+                {
+                    <ul class="linkRightStyle topicsContainer">
+                        <li>
+                            <a class="linkRightStyle" href="@item.Link">@item.Link</a>
+                        </li>
+                    </ul>
+                }
+            </div>
+        }
+    </div>
+}
+@Html.HiddenFor(x => x.SearchText)
+@Html.HiddenFor(x => x.clientId)
+@Html.HiddenFor(x => x.portalId)
+@Html.HiddenFor(x => x.ArticlePartialViewModel.ArticleItem.ArticleId, new { id = "articleId" })
+@Html.HiddenFor(x => x.Resources["CONTROLS_FEEDBACK_FEEDBACKFORM_NAMEERRORLABEL"], new { id = "nameTitle" })
+@Html.HiddenFor(x => x.Resources["CONTROLS_FEEDBACK_FEEDBACKFORM_EMAILERRORLABEL"], new { id = "emailTitle" })
+@Html.HiddenFor(x => x.Resources["CONTROLS_FEEDBACK_FEEDBACKFORM_FEEDBACKERRORLABEL"], new { id = "suggestionTitle" })
+<script src="@Url.Content("~/Content/JS/article.js")" type="text/javascript"></script>
+
+

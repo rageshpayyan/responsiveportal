@@ -1,0 +1,42 @@
+﻿@model ResponsivePortal.Models.FavoritesViewModel
+
+@{
+    ViewBag.Title = Utilities.GetResourceText(Model.Resources, "MANAGEMYFAVORITES");
+    Layout = null;
+}
+@if (Model.ContentList == null || Model.ContentList.Count==0)
+{
+    return;
+}
+<div class="row">
+    <div class="medium-headers contentTopOffset">@Model.Title</div>
+    <div class="borderContainer home_ArticlesContainer">
+        @if (Model.ContentList.Count <= 0 && Model.MyFavorites == true)
+        {
+            <div class="textStyle">@Utilities.GetResourceText(Model.Resources, "FAVORITES_MSG")</div>
+        }
+        @foreach (var item in Model.ContentList)
+        {
+            <ul class="normal-links topicsContainer">
+                <li>
+                    <a class="normal-links" href="/Article/Index/@Model.clientId/@Model.portalId?id=@item.ArticleBase.Id">@Html.Raw(HttpUtility.HtmlDecode(@item.ArticleBase.Title))</a>
+                </li>
+            </ul>
+        }
+
+        @if (Model.ContentList.Count > 0 && Model.MyFavorites == true)
+        {
+            <div class="headerRightStyle" align="right">
+
+                <ul class="normal-links topicsContainer">
+
+                    <a class="itemsOffset" href="~/Favorites/ManageFavorites/@Model.clientId/@Model.portalId">@Utilities.GetResourceText(Model.Resources, "MANAGEMYFAVORITES")</a>
+
+
+                </ul>
+            </div>
+        }
+    </div>
+
+    </div>
+
